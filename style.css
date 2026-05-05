@@ -659,12 +659,8 @@ button{touch-action:manipulation}
   text-align: center; /* 真ん中に配置 */
 }
 
-
-
-
-    img {
-  display: block;
-  width: 100%;
-  height: auto;
+img {
   max-width: 100%;
+  height: auto;
+  display: block;
 }
