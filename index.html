@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RIDDLE STORY</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand__title">RIDDLE STORY</div>
+      <div class="brand__tagline">人々の願いを叶えろ—</div>
+    </div>
+
+    <button id="menuButton" class="menu-button" type="button">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div id="drawerBackdrop" class="drawer-backdrop"></div>
+  <nav id="drawer" class="drawer">
+    <a href="#questionSection">今週の一問 <span>〉</span></a>
+    <a href="#ticketSection">TICKET <span>〉</span></a>
+    <a href="#allGameSection">ALL GAME <span>〉</span></a>
+    <a href="#aboutSection">ABOUT <span>〉</span></a>
+    <a href="#goodsSection">GOODS <span>〉</span></a>
+  </nav>
+
+  <main class="page">
+
+    <!-- 今週の一問 -->
+    <section id="questionSection" class="section hero">
+      <h2 class="section-title section-title--top">『今週の一問』</h2>
+
+      <button id="questionJump" class="hero__frame" type="button">
+        <img id="questionImage" src="assets/question.jpg" alt="今週の一問" />
+      </button>
+
+      <form id="answerForm" class="answer-form">
+        <input id="answerInput" type="text" placeholder="答えを入力" autocomplete="off" />
+        <button type="submit">送信</button>
+      </form>
+
+      <div id="reportArea" class="report-area">
+        <p class="report-area__text">正解！Xに正解したことを報告しよう！</p>
+        <a id="reportLink" class="report-link" href="#" target="_blank" rel="noopener noreferrer">
+          報告はこちらから
+        </a>
+      </div>
+    </section>
+
+    <!-- チケット -->
+    <section id="ticketSection" class="section ticket">
+      <h2 class="section-title">TICKET</h2>
+
+      <div class="ticket-nav">
+        <button id="prevWeek" class="ticket-nav__arrow">〈</button>
+        <div class="ticket-nav__center">
+          <div id="dateDisplay" class="ticket-nav__date">読み込み中...</div>
+        </div>
+        <button id="nextWeek" class="ticket-nav__arrow">〉</button>
+      </div>
+
+      <div id="dateStrip" class="week-strip"></div>
+
+      <div class="ticket-meta">
+        <div id="ticketStatus">最新情報を取得中...</div>
+        <div id="ticketUpdatedAt"></div>
+        <a id="ticketSource" href="#" target="_blank" rel="noopener noreferrer">
+          公演情報
+        </a>
+      </div>
+
+      <div id="ticketList" class="ticket-list"></div>
+
+      <div class="ticket-cta">
+  <a 
+    id="escapePurchaseButton"
+    class="button-outline"
+    href="https://escape.id/RIDDLESTORY-org/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    ESCAPE.ID でチケットを購入する
+  </a>
+</div>
+    </section>
+
+    <!-- ALL GAME -->
+    <section id="allGameSection" class="section allgame">
+      <h2 class="section-title">ALL GAME</h2>
+      <div id="gameGrid" class="game-grid"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="aboutSection" class="section about">
+      <h2 class="section-title">ABOUT</h2>
+      <div class="about-panel">
+        <p class="about-panel__lead">
+          体験者１万人突破！！
+        </p>
+        <p class="about-panel__text">
+          2025年4月13日、突如、X上に「ひさき」というアカウントが登場。<br/>
+そこから、「ひさき」とみんなの物語がはじまった。<br/>RIDDLE STORYはこれまでに体験者数１万人以上を動員し、新たな謎解きイベントを提供している。
+        </p>
+      </div>
+    </section>
+
+    <!-- GOODS -->
+    <section id="goodsSection" class="section goods">
+      <h2 class="section-title">GOODS</h2>
+
+      <div class="goods-panel">
+        <div class="goods-panel__title">おすすめ商品はこちら！</div>
+
+        <div class="goods-grid">
+          <!-- グッズカード -->
+          <a class="goods-card" href="https://nazo-shop.booth.pm/items/6993104" target="_blank" rel="noopener noreferrer">
+            <img src="assets/goods-1.jpg" alt="RIDDLE STORY グッズ1" />
+            <div class="goods-card__text">
+              RIDDLE STORYシリーズ<br/>
+              RIDDLE STORY 1 公式攻略本<br/>
+              1,000円(税込)
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <!-- 購入ボタン -->
+      <div class="goods-cta">
+        <a class="button-outline" href="https://nazo-shop.booth.pm/" target="_blank" rel="noopener noreferrer">
+          公式ショップはこちらから
+        </a>
+      </div>
+    </section>
+
+    <!-- テンプレ -->
+    <template id="gameCardTemplate">
+      <a class="game-card" href="#" target="_blank" rel="noopener noreferrer">
+        <img class="game-card__thumb" alt="" />
+        <div class="game-card__body">
+          <h3 class="game-card__title"></h3>
+          <p class="game-card__catch"></p>
+          <div class="game-card__meta">
+            <span class="game-card__badge"></span>
+            <span class="game-card__badge game-card__badge--sub"></span>
+            <span class="game-card__more">詳細はこちら</span>
+          </div>
+        </div>
+      </a>
+    </template>
+
+  </main>
+</body>
+</html>
