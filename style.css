@@ -536,7 +536,7 @@ button{touch-action:manipulation}
 }
 .goods-card img{
   width:100%;
-  aspect-ratio:1 / 1;
+  aspect-ratio:.82 / 1;
   object-fit:cover;
   background:#e6e6e6;
 }
@@ -659,8 +659,43 @@ button{touch-action:manipulation}
   text-align: center; /* 真ん中に配置 */
 }
 
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+/* スライダー */
+.slider { position:relative; overflow:hidden; }
+.slide { display:none; width:100%; border-radius:10px; }
+.slide.active { display:block; }
+
+/* NEWSボックス */
+.news-box {
+  border:2px solid #000;
+  border-radius:10px;
+  max-height:150px;
+  overflow-y:auto;
+  padding:10px;
 }
+.news-item {
+  display:block;
+  padding:8px;
+  border-bottom:1px solid #ccc;
+  text-decoration:none;
+  color:#000;
+}
+.news-item:hover { background:#f0f0f0; }
+
+.news-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start; /* ←中央じゃなくて上揃えにする */
+}
+
+.news-date {
+  min-width: 95px;
+  font-weight: bold;
+  white-space: nowrap; /* ←これが一番大事（改行させない） */
+}
+
+.news-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+</style>
