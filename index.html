@@ -30,26 +30,47 @@
 
   <main class="page">
 
-    <!-- 今週の一問 -->
-    <section id="questionSection" class="section hero">
-      <h2 class="section-title section-title--top">『今週の一問』</h2>
+<section id="topic">
+  <h2>TOPIC</h2>
+  <div class="slider">
+    <a href="https://note.com/riddle_story/n/n003fef573b84" target="_blank">
+      <img src="topic1.jpg" class="slide active">
+    </a>
+    <a href="https://note.com/riddle_story/n/n1766b51dbdfe" target="_blank">
+      <img src="topic2.jpg" class="slide">
+    </a>
+    <a href="https://note.com/riddle_story" target="_blank">
+      <img src="topic3.jpg" class="slide">
+    </a>
+  </div>
+</section>
 
-      <button id="questionJump" class="hero__frame" type="button">
-        <img id="questionImage" src="assets/question.jpg" alt="今週の一問" />
-      </button>
+<section id="news">
+  <h2>NEWS</h2>
+  <div class="news-box">
 
-      <form id="answerForm" class="answer-form">
-        <input id="answerInput" type="text" placeholder="答えを入力" autocomplete="off" />
-        <button type="submit">送信</button>
-      </form>
+    <a href="https://note.com/riddle_story/n/n0afa2583a5d4?sub_rt=share_pb" target="_blank" rel="noopener noreferrer" class="news-item">
+      <span class="news-date">2025.05.06</span>
+      <span class="news-text">事前に公開されていた公演について</span>
+    </a>
 
-      <div id="reportArea" class="report-area">
-        <p class="report-area__text">正解！Xに正解したことを報告しよう！</p>
-        <a id="reportLink" class="report-link" href="#" target="_blank" rel="noopener noreferrer">
-          報告はこちらから
-        </a>
-      </div>
-    </section>
+    <a href="https://note.com/riddle_story/n/n1766b51dbdfe" target="_blank" rel="noopener noreferrer" class="news-item">
+      <span class="news-date">2025.05.06</span>
+      <span class="news-text">一緒に手伝ってくれる仲間を募集します！</span>
+    </a>
+
+    <a href="https://note.com/riddle_story/n/n003fef573b84" target="_blank" rel="noopener noreferrer" class="news-item">
+      <span class="news-date">2025.05.06</span>
+      <span class="news-text">公式サイトリニューアル</span>
+    </a>
+
+    <a href="https://note.com/riddle_story/n/n003fef573b84" target="_blank" rel="noopener noreferrer" class="news-item">
+      <span class="news-date">2025.05.06</span>
+      <span class="news-text">RIDDLE STORY 活動再開！</span>
+    </a>
+
+  </div>
+</section>
 
     <!-- チケット -->
     <section id="ticketSection" class="section ticket">
@@ -86,6 +107,27 @@
     ESCAPE.ID でチケットを購入する
   </a>
 </div>
+    </section>
+
+        <!-- 今週の一問 -->
+    <section id="questionSection" class="section hero">
+      <h2 class="section-title section-title--top">『今週の一問』</h2>
+
+      <button id="questionJump" class="hero__frame" type="button">
+        <img id="questionImage" src="assets/question.jpg" alt="今週の一問" />
+      </button>
+
+      <form id="answerForm" class="answer-form">
+        <input id="answerInput" type="text" placeholder="答えを入力" autocomplete="off" />
+        <button type="submit">送信</button>
+      </form>
+
+      <div id="reportArea" class="report-area">
+        <p class="report-area__text">正解！Xに正解したことを報告しよう！</p>
+        <a id="reportLink" class="report-link" href="#" target="_blank" rel="noopener noreferrer">
+          報告はこちらから
+        </a>
+      </div>
     </section>
 
     <!-- ALL GAME -->
