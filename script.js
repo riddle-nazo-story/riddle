@@ -2,7 +2,7 @@ const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
   questionImage: "assets/question.jpg",
   correctAnswer: "リニューアル",
-  reportUrl: "https://example.com/report",
+  reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
 };
 
