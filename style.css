@@ -698,4 +698,24 @@ button{touch-action:manipulation}
   line-height: 1.4;
 }
 
+/* スライドアニメーション */
+.slider {
+  position: relative;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100%;
+  opacity: 0;
+  transform: translateX(20px); /* 少し右から */
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.slide.active {
+  opacity: 1;
+  transform: translateX(0);
+  position: relative;
+}
+
 </style>
