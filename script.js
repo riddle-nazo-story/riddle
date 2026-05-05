@@ -1,3 +1,18 @@
+function toggleMenu() {
+  const menu = document.getElementById("menu");
+  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+
+// スライド処理
+let current = 0;
+const slides = document.querySelectorAll(".slide");
+
+setInterval(() => {
+  slides[current].classList.remove("active");
+  current = (current + 1) % slides.length;
+  slides[current].classList.add("active");
+}, 3000);
+
 const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
   questionImage: "assets/question.jpg",
