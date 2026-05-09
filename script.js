@@ -15,8 +15,8 @@ setInterval(() => {
 
 const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
-  questionImage: "assets/question.jpg",
-  correctAnswer: "リニューアル",
+  questionImage: "assets/question-2.jpg",
+  correctAnswer: "まいく",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
 };
