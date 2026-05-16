@@ -15,8 +15,11 @@ setInterval(() => {
 
 const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
-  questionImage: "assets/question-2.jpg",
-  correctAnswer: "まいく",
+
+  // 画像URLを直接指定
+  questionImage: "https://previews.dropbox.com/p/thumb/ADDzl8R8wkDup5k1DIdFXEF3qTa78PrJ865v-_e-Y6dbpBjq_REC-YtxvuWafbUs4Oybsuq-hyAzqkw1XY3Il2BtlKgQh6bJwSSYiOz3hPhvRj_fmcc-WiWIWwUVMT1TE4GWyDZZcbS3-CzuX1Zz7HYY3XtkkEc0xsMrPx0ka9vPrjmgHMbGFlv-PNhZ8KuIhqZodGUyh44SDs_JuQeO_GCq__1QMpkMM4H3fWD5n86aUVbnExcORVDrAiKC2sGLt_k-i_vsb1cPxJYaUestxGumNlX-1z7kAe1FVPVuZpRrZGM6Ts3-YydtebSbgdJs66WSwI6UUXlMpEatpBWKH9ii/p.png?is_prewarmed=true",
+
+  correctAnswer: "きつつき",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
 };
