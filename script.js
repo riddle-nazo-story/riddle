@@ -17,9 +17,8 @@ const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
 
   // 画像URLを直接指定
-  questionImage: "https://previews.dropbox.com/p/thumb/ADDzl8R8wkDup5k1DIdFXEF3qTa78PrJ865v-_e-Y6dbpBjq_REC-YtxvuWafbUs4Oybsuq-hyAzqkw1XY3Il2BtlKgQh6bJwSSYiOz3hPhvRj_fmcc-WiWIWwUVMT1TE4GWyDZZcbS3-CzuX1Zz7HYY3XtkkEc0xsMrPx0ka9vPrjmgHMbGFlv-PNhZ8KuIhqZodGUyh44SDs_JuQeO_GCq__1QMpkMM4H3fWD5n86aUVbnExcORVDrAiKC2sGLt_k-i_vsb1cPxJYaUestxGumNlX-1z7kAe1FVPVuZpRrZGM6Ts3-YydtebSbgdJs66WSwI6UUXlMpEatpBWKH9ii/p.png?is_prewarmed=true",
-
-  correctAnswer: "きつつき",
+  questionImage: "https://previews.dropbox.com/p/thumb/ADBtlsxg5dCaHBeL5RWI0FI_jtaACLtYY3pTzFjeiJKs1TRJd8qosbv9_4KdUQ_A1MxIdk6NHL7zt97HrNi-TWQI8Qwu4xWoA49Yfy1ckfssjwKAcUnRwNG0REesCM4dSdV7-o9x6Ku-58jfUvKV9yPP5scGOKCGOawLWG-nLGlVvbWsypQqQxUStumXYJdICarjAH2Fxrt5XyfAOvdI5SmWR-NZAqZNLK1eu6rk5ZCWBjC-9qPG0zwY_4wb6MsSzT2Ulhj5oHoUFhyo41ZgE5ScmxsCZS1oSsuVrI3BbsvqUKz6Sw8z3p0vka-nFyhCoOgSUl2N6fCzTuO-x4EO5oJD/p.png?is_prewarmed=true",
+  correctAnswer: "ひさき",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
 };
