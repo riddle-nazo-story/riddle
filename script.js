@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 問題画像はローカルファイルで管理するのが安定します。
   // 画像を差し替える時は assets/question.jpg を入れ替えるだけでOK。
-  questionImage: "assets/question-004.jpg",
+  questionImage: "assets/question.jpg",
   correctAnswer: "ひさき",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
@@ -22,22 +22,6 @@ const EVENTS = [
     api: "https://pubapi.escape.id/e/MY3qtFqNrj5a/loc/U4Etz4rYhyNb/slots.json",
     manualDates: [],
     rangeDates: [],
-  },
-    {
-    title: "AIが作ったゲームからの脱出",
-    catch: "セレクトアンサーを攻略せよ。",
-    image: "assets/escape-ai-game.jpg",
-    detailUrl: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45",
-    api: null,
-    rangeDates: [
-      {
-        start: "2026-06-20",
-        end: "2050-12-31",
-        slots: [
-          { startAt: "0:00", vacancyType: "NOT_SALE", url: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45" },
-        ],
-      },
-    ],
   },
   {
     title: "とあるホテルの秘密",
