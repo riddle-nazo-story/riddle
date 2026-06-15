@@ -1,29 +1,16 @@
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  menu.style.display = menu.style.display === "flex" ? "none" : "flex";
-}
-
-// スライド処理
-let current = 0;
-const slides = document.querySelectorAll(".slide");
-
-setInterval(() => {
-  slides[current].classList.remove("active");
-  current = (current + 1) % slides.length;
-  slides[current].classList.add("active");
-}, 3000);
+"use strict";
 
 const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
 
-const CONFIG = {
-  apiRefreshMs: 5 * 60 * 1000,
-
-// 画像URLを直接指定
-  questionImage:"https://previews.dropbox.com/p/thumb/ADBtlsxg5dCaHBeL5RWI0FI_jtaACLtYY3pTzFjeiJKs1TRJd8qosbv9_4KdUQ_A1MxIdk6NHL7zt97HrNi-TWQI8Qwu4xWoA49Yfy1ckfssjwKAcUnRwNG0REesCM4dSdV7-o9x6Ku-58jfUvKV9yPP5scGOKCGOawLWG-nLGlVvbWsypQqQxUStumXYJdICarjAH2Fxrt5XyfAOvdI5SmWR-NZAqZNLK1eu6rk5ZCWBjC-9qPG0zwY_4wb6MsSzT2Ulhj5oHoUFhyo41ZgE5ScmxsCZS1oSsuVrI3BbsvqUKz6Sw8z3p0vka-nFyhCoOgSUl2N6fCzTuO-x4EO5oJD/p.png?is_prewarmed=true",
+  // 問題画像はローカルファイルで管理するのが安定します。
+  // 画像を差し替える時は assets/question.jpg を入れ替えるだけでOK。
+  questionImage: "assets/question-004.jpg",
   correctAnswer: "ひさき",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
+  apiTimeoutMs: 10000,
+  topicAutoMs: 5000,
 };
 
 const EVENTS = [
@@ -35,6 +22,22 @@ const EVENTS = [
     api: "https://pubapi.escape.id/e/MY3qtFqNrj5a/loc/U4Etz4rYhyNb/slots.json",
     manualDates: [],
     rangeDates: [],
+  },
+    {
+    title: "AIが作ったゲームからの脱出",
+    catch: "セレクトアンサーを攻略せよ。",
+    image: "assets/escape-ai-game.jpg",
+    detailUrl: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-06-20",
+        end: "2050-12-31",
+        slots: [
+          { startAt: "0:00", vacancyType: "NOT_SALE", url: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45" },
+        ],
+      },
+    ],
   },
   {
     title: "とあるホテルの秘密",
@@ -264,6 +267,34 @@ const EVENTS = [
   },
 ];
 
+
+const GOODS = [
+  {
+    label: "おすすめ",
+    title: "RIDDLE STORY 1 公式攻略本",
+    price: "1,000円(税込)",
+    desc: "RIDDLE STORY 1の物語や謎を振り返れる公式攻略本です。遊んだ後の余韻にも、これから知りたい人にもおすすめ。",
+    image: "assets/goods-1.jpg",
+    url: "https://nazo-shop.booth.pm/items/6993104",
+  },
+  {
+    label: "シリーズ作品",
+    title: "RIDDLE STORY 2",
+    price: "販売ページで確認",
+    desc: "███を救い出せ！！ RIDDLE STORYシリーズのアーカイブ作品です。",
+    image: "assets/riddlestory2.jpg",
+    url: "https://nazo-shop.booth.pm/items/7303330",
+  },
+  {
+    label: "ショップ",
+    title: "RIDDLE STORY 公式ショップ",
+    price: "商品一覧",
+    desc: "RIDDLE STORY関連商品はこちらから確認できます。新商品が追加されたら、このGOODS配列を書き換えるだけで反映できます。",
+    image: "assets/goods-1.jpg",
+    url: "https://nazo-shop.booth.pm/",
+  },
+];
+
 const GAMES = [
   {
     title: "とあるホテルの秘密",
@@ -314,28 +345,45 @@ const state = {
   weekOffset: 0,
   baseWeekStart: null,
   expandedEventKeys: new Set(),
+  firstLoadDone: false,
+  topicIndex: 0,
+  topicTimer: null,
+  goodsIndex: 0,
 };
 
-const els = {
-  menuButton: document.getElementById("menuButton"),
-  drawer: document.getElementById("drawer"),
-  drawerBackdrop: document.getElementById("drawerBackdrop"),
-  questionJump: document.getElementById("questionJump"),
-  questionImage: document.getElementById("questionImage"),
-  answerForm: document.getElementById("answerForm"),
-  answerInput: document.getElementById("answerInput"),
-  reportArea: document.getElementById("reportArea"),
-  reportLink: document.getElementById("reportLink"),
-  prevWeek: document.getElementById("prevWeek"),
-  nextWeek: document.getElementById("nextWeek"),
-  dateDisplay: document.getElementById("dateDisplay"),
-  dateStrip: document.getElementById("dateStrip"),
-  ticketList: document.getElementById("ticketList"),
-  ticketStatus: document.getElementById("ticketStatus"),
-  ticketUpdatedAt: document.getElementById("ticketUpdatedAt"),
-  ticketSource: document.getElementById("ticketSource"),
-  gameGrid: document.getElementById("gameGrid"),
-};
+const els = {};
+
+function cacheElements() {
+  Object.assign(els, {
+    menuButton: document.getElementById("menuButton"),
+    drawer: document.getElementById("drawer"),
+    drawerBackdrop: document.getElementById("drawerBackdrop"),
+    questionJump: document.getElementById("questionJump"),
+    questionImage: document.getElementById("questionImage"),
+    answerForm: document.getElementById("answerForm"),
+    answerInput: document.getElementById("answerInput"),
+    reportArea: document.getElementById("reportArea"),
+    reportLink: document.getElementById("reportLink"),
+    prevWeek: document.getElementById("prevWeek"),
+    nextWeek: document.getElementById("nextWeek"),
+    dateDisplay: document.getElementById("dateDisplay"),
+    dateStrip: document.getElementById("dateStrip"),
+    ticketList: document.getElementById("ticketList"),
+    ticketStatus: document.getElementById("ticketStatus"),
+    ticketUpdatedAt: document.getElementById("ticketUpdatedAt"),
+    ticketSource: document.getElementById("ticketSource"),
+    ticketRefreshButton: document.getElementById("ticketRefreshButton"),
+    gameGrid: document.getElementById("gameGrid"),
+    topicSlider: document.getElementById("topicSlider") || document.querySelector(".slider"),
+    topicPrev: document.getElementById("topicPrev"),
+    topicNext: document.getElementById("topicNext"),
+    topicDots: document.getElementById("topicDots"),
+    goodsSlider: document.getElementById("goodsSlider"),
+    goodsPrev: document.getElementById("goodsPrev"),
+    goodsNext: document.getElementById("goodsNext"),
+    goodsDots: document.getElementById("goodsDots"),
+  });
+}
 
 function escapeHtml(text) {
   return String(text ?? "")
@@ -360,7 +408,7 @@ function getStartOfWeek(dateObj) {
 }
 
 function getWeekDatesFromBase(baseWeekStart, offsetWeek) {
-  const start = new Date(baseWeekStart);
+  const start = new Date(baseWeekStart || getStartOfWeek(new Date()));
   start.setDate(start.getDate() + offsetWeek * 7);
 
   const arr = [];
@@ -383,30 +431,47 @@ function weekdayLabel(dateObj) {
 function getStatusMeta(vacancyType) {
   switch (vacancyType) {
     case "ON_SALE":
-      return { label: "○", text: "販売中", className: "is-sale" };
+      return { label: "○", text: "販売中", className: "is-sale", clickable: true };
     case "FEW_LEFT":
-      return { label: "△", text: "残りわずか", className: "is-few" };
+      return { label: "△", text: "残りわずか", className: "is-few", clickable: true };
     case "SOLD_OUT":
-      return { label: "×", text: "満席", className: "is-sold" };
-      case "NOT_SALE":
-  return { label: "-", text: "公演終了", className: "is-notsale" };
+      return { label: "×", text: "満席", className: "is-sold", clickable: false };
+    case "NOT_SALE":
+      return { label: "-", text: "公演終了", className: "is-notsale", clickable: false };
     case "NOT_IN_SALES_PERIOD":
     case "BEFORE_SALES_PERIOD":
     case "AFTER_SALES_PERIOD":
-      return { label: "―", text: "受付外", className: "is-closed" };
+      return { label: "―", text: "受付外", className: "is-closed", clickable: false };
     default:
-      return { label: "・", text: "受付外", className: "is-closed" };
+      return { label: "・", text: "受付外", className: "is-closed", clickable: false };
   }
 }
 
-function normalizeSlot(slot) {
+function normalizeSlot(slot = {}) {
   return {
     ...slot,
-    startAt: slot.startAt ?? "",
-    endAt: slot.endAt ?? "",
-    vacancyType: slot.vacancyType ?? "ON_SALE",
-    url: slot.url ?? "",
+    startAt: slot.startAt ?? slot.start_at ?? slot.start ?? slot.startTime ?? slot.start_time ?? "",
+    endAt: slot.endAt ?? slot.end_at ?? slot.end ?? slot.endTime ?? slot.end_time ?? "",
+    vacancyType: slot.vacancyType ?? slot.vacancy_type ?? slot.status ?? slot.vacancy ?? "ON_SALE",
+    url: slot.url ?? slot.purchaseUrl ?? slot.purchase_url ?? slot.detailUrl ?? slot.detail_url ?? "",
   };
+}
+
+function normalizeApiDates(json) {
+  const candidates = [
+    json?.dates,
+    json?.data?.dates,
+    json?.event?.dates,
+    Array.isArray(json) ? json : null,
+  ];
+
+  const dates = candidates.find(Array.isArray) || [];
+  return dates
+    .map((d) => ({
+      date: d.date ?? d.ymd ?? d.day ?? "",
+      slots: Array.isArray(d.slots) ? d.slots.map(normalizeSlot) : [],
+    }))
+    .filter((d) => d.date);
 }
 
 function expandRangeDates(rangeDates = []) {
@@ -432,28 +497,18 @@ function expandRangeDates(rangeDates = []) {
 function mergeDates(apiDates = [], manualDates = [], rangeDates = []) {
   const map = new Map();
 
-  for (const d of apiDates) {
-    map.set(d.date, {
-      date: d.date,
-      slots: Array.isArray(d.slots) ? d.slots.map(normalizeSlot) : [],
-    });
-  }
-
-  for (const d of manualDates) {
-    if (!map.has(d.date)) {
-      map.set(d.date, { date: d.date, slots: [] });
+  const addDate = (dateObj) => {
+    if (!dateObj?.date) return;
+    if (!map.has(dateObj.date)) {
+      map.set(dateObj.date, { date: dateObj.date, slots: [] });
     }
-    const current = map.get(d.date);
-    current.slots.push(...(Array.isArray(d.slots) ? d.slots.map(normalizeSlot) : []));
-  }
+    const current = map.get(dateObj.date);
+    current.slots.push(...(Array.isArray(dateObj.slots) ? dateObj.slots.map(normalizeSlot) : []));
+  };
 
-  for (const d of expandRangeDates(rangeDates)) {
-    if (!map.has(d.date)) {
-      map.set(d.date, { date: d.date, slots: [] });
-    }
-    const current = map.get(d.date);
-    current.slots.push(...d.slots);
-  }
+  apiDates.forEach(addDate);
+  manualDates.forEach(addDate);
+  expandRangeDates(rangeDates).forEach(addDate);
 
   return [...map.values()].sort((a, b) => {
     if (a.date === "常設") return 1;
@@ -462,25 +517,43 @@ function mergeDates(apiDates = [], manualDates = [], rangeDates = []) {
   });
 }
 
+async function fetchWithTimeout(url, timeoutMs = CONFIG.apiTimeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const separator = url.includes("?") ? "&" : "?";
+    const res = await fetch(`${url}${separator}t=${Date.now()}`, {
+      cache: "no-store",
+      signal: controller.signal,
+      headers: { Accept: "application/json" },
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 async function fetchEventData(spec) {
   let apiDates = [];
+  let apiOk = true;
+  let apiError = "";
 
   if (spec.api) {
     try {
-      const res = await fetch(`${spec.api}?t=${Date.now()}`, { cache: "no-store" });
-      if (res.ok) {
-        const json = await res.json();
-        if (Array.isArray(json?.dates)) {
-          apiDates = json.dates;
-        }
-      }
+      const json = await fetchWithTimeout(spec.api);
+      apiDates = normalizeApiDates(json);
     } catch (error) {
-      console.warn("API取得に失敗:", spec.title, error);
+      apiOk = false;
+      apiError = error?.name === "AbortError" ? "タイムアウト" : String(error?.message || error);
+      console.warn("API取得に失敗:", spec.title, apiError);
     }
   }
 
   const dates = mergeDates(apiDates, spec.manualDates || [], spec.rangeDates || []);
-  return { ...spec, dates };
+  return { ...spec, dates, apiOk, apiError };
 }
 
 function getTodayYmd() {
@@ -496,10 +569,11 @@ function setSelectedDateFromTodayIfPossible() {
     return;
   }
 
-  state.selectedDate = state.allDates.find((d) => d !== "常設") || state.allDates[0] || today;
+  state.selectedDate = today;
 }
 
 function renderDateStrip() {
+  if (!els.dateStrip) return;
   els.dateStrip.innerHTML = "";
 
   const weekDates = getWeekDatesFromBase(state.baseWeekStart, state.weekOffset);
@@ -535,6 +609,7 @@ function renderDateStrip() {
 }
 
 function renderDateDisplay() {
+  if (!els.dateDisplay) return;
   const d = state.selectedDate;
   if (!d || d === "常設") {
     els.dateDisplay.textContent = "常設";
@@ -561,7 +636,7 @@ function formatTimePart(value) {
 function formatTimeLabel(slot) {
   const start = formatTimePart(slot.startAt);
   const end = formatTimePart(slot.endAt);
-  if (!start && !end) return "";
+  if (!start && !end) return "随時";
   if (start && !end) return `${start}-`;
   return `${start} - ${end}`;
 }
@@ -577,6 +652,7 @@ function eventKey(event) {
 }
 
 function renderTickets() {
+  if (!els.ticketList) return;
   els.ticketList.innerHTML = "";
 
   const visibleEvents = state.events
@@ -587,7 +663,7 @@ function renderTickets() {
     .filter((event) => event.slots.length > 0);
 
   if (!visibleEvents.length) {
-    els.ticketList.innerHTML = `<div class="ticket-card">表示できる公演がありません。</div>`;
+    els.ticketList.innerHTML = `<div class="ticket-card">この日に表示できる公演はありません。</div>`;
     return;
   }
 
@@ -601,18 +677,14 @@ function renderTickets() {
     const visual = document.createElement("a");
     visual.className = "ticket-card__visual";
     visual.href = event.detailUrl || "#";
+    visual.target = "_blank";
+    visual.rel = "noopener noreferrer";
 
     const poster = document.createElement("img");
     poster.className = "ticket-card__poster";
     poster.src = event.image || "assets/placeholder.jpg";
     poster.alt = event.title;
-    poster.addEventListener(
-      "error",
-      () => {
-        poster.src = "assets/placeholder.jpg";
-      },
-      { once: true }
-    );
+    poster.addEventListener("error", () => { poster.src = "assets/placeholder.jpg"; }, { once: true });
 
     visual.appendChild(poster);
 
@@ -622,6 +694,8 @@ function renderTickets() {
     const titleLink = document.createElement("a");
     titleLink.className = "ticket-card__title-link";
     titleLink.href = event.detailUrl || "#";
+    titleLink.target = "_blank";
+    titleLink.rel = "noopener noreferrer";
 
     const title = document.createElement("h3");
     title.className = "ticket-card__title";
@@ -636,6 +710,8 @@ function renderTickets() {
     const detailLink = document.createElement("a");
     detailLink.className = "ticket-card__detail";
     detailLink.href = event.detailUrl || "#";
+    detailLink.target = "_blank";
+    detailLink.rel = "noopener noreferrer";
     detailLink.textContent = "公演詳細";
 
     const slotGrid = document.createElement("div");
@@ -644,16 +720,20 @@ function renderTickets() {
     const expanded = state.expandedEventKeys.has(eventKey(event));
     const shouldCollapse = event.slots.length > CONFIG.maxVisibleSlots && !expanded;
     const visibleSlots = shouldCollapse
-      ? event.slots.slice(0, CONFIG.maxVisibleSlots - 1)
+      ? event.slots.slice(0, Math.max(CONFIG.maxVisibleSlots - 1, 1))
       : event.slots.slice();
 
     visibleSlots.forEach((slot) => {
       const status = getStatusMeta(slot.vacancyType);
-
       const btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "slot-box";
+      btn.className = `slot-box ${status.className}`;
       btn.setAttribute("aria-label", `${event.title} ${formatTimeLabel(slot)} ${status.text}`);
+
+      if (!status.clickable) {
+        btn.classList.add("is-disabled");
+        btn.setAttribute("aria-disabled", "true");
+      }
 
       btn.innerHTML = `
         <div class="slot-box__mark">${status.label}</div>
@@ -661,9 +741,9 @@ function renderTickets() {
       `;
 
       btn.addEventListener("click", () => {
-        if (slot.vacancyType === "NOT_SALE") return; // ←ここ追加
+        if (!status.clickable) return;
         const url = slot.url || event.detailUrl;
-        if (url) window.location.href = url;
+        if (url) window.open(url, "_blank", "noopener,noreferrer");
       });
 
       slotGrid.appendChild(btn);
@@ -705,8 +785,10 @@ function renderTickets() {
 }
 
 function renderGames() {
+  if (!els.gameGrid) return;
   els.gameGrid.innerHTML = "";
   const template = document.getElementById("gameCardTemplate");
+  if (!template) return;
 
   GAMES.forEach((game) => {
     const node = template.content.cloneNode(true);
@@ -724,13 +806,7 @@ function renderGames() {
 
     img.src = game.image || "assets/placeholder.jpg";
     img.alt = game.title;
-    img.addEventListener(
-      "error",
-      () => {
-        img.src = "assets/placeholder.jpg";
-      },
-      { once: true }
-    );
+    img.addEventListener("error", () => { img.src = "assets/placeholder.jpg"; }, { once: true });
 
     title.textContent = game.title;
     catchText.textContent = game.catch || "";
@@ -757,12 +833,15 @@ function moveWeek(delta) {
 }
 
 function setDrawer(open) {
+  if (!els.drawer || !els.drawerBackdrop || !els.menuButton) return;
   els.drawer.classList.toggle("is-open", open);
   els.drawerBackdrop.classList.toggle("is-open", open);
   els.menuButton.setAttribute("aria-expanded", String(open));
 }
 
 function initDrawer() {
+  if (!els.menuButton || !els.drawer || !els.drawerBackdrop) return;
+
   els.menuButton.addEventListener("click", () => {
     const open = !els.drawer.classList.contains("is-open");
     setDrawer(open);
@@ -779,6 +858,8 @@ function initDrawer() {
 }
 
 function initAnswerForm() {
+  if (!els.answerForm || !els.answerInput) return;
+
   els.answerForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const value = els.answerInput.value.trim();
@@ -791,19 +872,20 @@ function initAnswerForm() {
     }
 
     if (normalized === correct) {
-      els.reportArea.classList.add("is-visible");
-      els.reportLink.href = CONFIG.reportUrl;
+      els.reportArea?.classList.add("is-visible");
+      if (els.reportLink) els.reportLink.href = CONFIG.reportUrl;
       return;
     }
 
-    els.reportArea.classList.remove("is-visible");
+    els.reportArea?.classList.remove("is-visible");
     alert("不正解。何かが違うようです。");
   });
 }
 
 function initJump() {
+  if (!els.questionJump) return;
   els.questionJump.addEventListener("click", () => {
-    document.getElementById("ticketSection").scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("ticketSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 }
 
@@ -814,57 +896,225 @@ function initStaticLinks() {
       if (!url || url === "#") e.preventDefault();
     });
   });
-}
 
-async function loadAllData() {
-  els.ticketStatus.textContent = "最新情報を取得中...";
-
-  state.events = await Promise.all(EVENTS.map(fetchEventData));
-
-  const rawDates = state.events.flatMap((event) => event.dates.map((d) => d.date));
-  state.allDates = [...new Set(rawDates.filter((d) => d && d !== "常設"))].sort((a, b) => a.localeCompare(b));
-
-  state.baseWeekStart = getStartOfWeek(new Date());
-  setSelectedDateFromTodayIfPossible();
-
-  renderDateDisplay();
-  renderDateStrip();
-  renderTickets();
-  renderGames();
-
-  els.ticketStatus.textContent = "最新情報を反映しました。";
-  els.ticketUpdatedAt.textContent = `更新日時: ${new Date().toLocaleString("ja-JP")}`;
-  els.ticketSource.textContent = "公演情報";
-  els.ticketSource.href = EVENTS[0]?.api || "#";
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-  if (els.questionImage) {
-    els.questionImage.src = CONFIG.questionImage;
-    els.questionImage.addEventListener(
-      "error",
-      () => {
-        els.questionImage.src = "assets/placeholder.jpg";
-      },
-      { once: true }
-    );
-  }
-
-  initDrawer();
-  initAnswerForm();
-  initJump();
-  initStaticLinks();
-
-  els.prevWeek.addEventListener("click", () => moveWeek(-1));
-  els.nextWeek.addEventListener("click", () => moveWeek(1));
-
-  await loadAllData();
-  setInterval(loadAllData, CONFIG.apiRefreshMs);
-  
-    document.querySelectorAll("a[href]").forEach(link => {
-    if (link.getAttribute("href").startsWith("http")) {
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href") || "";
+    if (href.startsWith("http")) {
       link.setAttribute("target", "_blank");
       link.setAttribute("rel", "noopener noreferrer");
     }
   });
+}
+
+function initQuestionImage() {
+  if (!els.questionImage) return;
+  if (CONFIG.questionImage) els.questionImage.src = CONFIG.questionImage;
+  els.questionImage.addEventListener("error", () => {
+    els.questionImage.src = "assets/placeholder.jpg";
+  }, { once: true });
+}
+
+function initTopicSlider() {
+  if (!els.topicSlider) return;
+
+  const links = [...els.topicSlider.querySelectorAll("a")];
+  if (!links.length) return;
+
+  links.forEach((link, index) => {
+    link.classList.add("topic-slide-link");
+    const img = link.querySelector(".slide") || link.querySelector("img");
+    if (img) img.classList.toggle("active", index === 0);
+    link.classList.toggle("is-active", index === 0);
+  });
+
+  function renderTopic() {
+    links.forEach((link, index) => {
+      const active = index === state.topicIndex;
+      link.classList.toggle("is-active", active);
+      const img = link.querySelector(".slide") || link.querySelector("img");
+      if (img) img.classList.toggle("active", active);
+    });
+
+    if (els.topicDots) {
+      els.topicDots.querySelectorAll(".topic-dot").forEach((dot, index) => {
+        dot.classList.toggle("is-active", index === state.topicIndex);
+        dot.setAttribute("aria-current", index === state.topicIndex ? "true" : "false");
+      });
+    }
+  }
+
+  function showTopic(nextIndex, resetTimer = true) {
+    state.topicIndex = (nextIndex + links.length) % links.length;
+    renderTopic();
+    if (resetTimer) restartTopicTimer();
+  }
+
+  function restartTopicTimer() {
+    clearInterval(state.topicTimer);
+    state.topicTimer = setInterval(() => showTopic(state.topicIndex + 1, false), CONFIG.topicAutoMs);
+  }
+
+  if (els.topicDots) {
+    els.topicDots.innerHTML = "";
+    links.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "topic-dot";
+      dot.setAttribute("aria-label", `トピックス${index + 1}を表示`);
+      dot.addEventListener("click", () => showTopic(index));
+      els.topicDots.appendChild(dot);
+    });
+  }
+
+  els.topicPrev?.addEventListener("click", () => showTopic(state.topicIndex - 1));
+  els.topicNext?.addEventListener("click", () => showTopic(state.topicIndex + 1));
+
+  renderTopic();
+  restartTopicTimer();
+}
+
+
+function initGoodsSlider() {
+  if (!els.goodsSlider || !Array.isArray(GOODS) || GOODS.length === 0) return;
+
+  els.goodsSlider.innerHTML = "";
+
+  GOODS.forEach((goods, index) => {
+    const slide = document.createElement("article");
+    slide.className = "goods-slide";
+    if (index === 0) slide.classList.add("is-active");
+
+    const safeUrl = goods.url || "#";
+    const safeImage = goods.image || "assets/placeholder.jpg";
+
+    slide.innerHTML = `
+      <div class="goods-slide__image-wrap">
+        <img class="goods-slide__image" src="${escapeHtml(safeImage)}" alt="${escapeHtml(goods.title || "グッズ")}">
+      </div>
+
+      <div class="goods-slide__body">
+        <div class="goods-slide__label">${escapeHtml(goods.label || "GOODS")}</div>
+        <h3 class="goods-slide__title">${escapeHtml(goods.title || "")}</h3>
+        <p class="goods-slide__price">${escapeHtml(goods.price || "")}</p>
+        <p class="goods-slide__desc">${escapeHtml(goods.desc || "")}</p>
+        <a class="goods-slide__button" href="${escapeHtml(safeUrl)}" target="_blank" rel="noopener noreferrer">
+          詳細・購入はこちら
+        </a>
+      </div>
+    `;
+
+    const img = slide.querySelector("img");
+    img?.addEventListener("error", () => {
+      img.src = "assets/placeholder.jpg";
+    }, { once: true });
+
+    els.goodsSlider.appendChild(slide);
+  });
+
+  function renderGoods(index) {
+    const slides = [...els.goodsSlider.querySelectorAll(".goods-slide")];
+    if (!slides.length) return;
+
+    state.goodsIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === state.goodsIndex);
+    });
+
+    els.goodsDots?.querySelectorAll(".goods-dot").forEach((dot, i) => {
+      dot.classList.toggle("is-active", i === state.goodsIndex);
+      dot.setAttribute("aria-current", i === state.goodsIndex ? "true" : "false");
+    });
+  }
+
+  if (els.goodsDots) {
+    els.goodsDots.innerHTML = "";
+    GOODS.forEach((_, index) => {
+      const dot = document.createElement("button");
+      dot.type = "button";
+      dot.className = "goods-dot";
+      dot.setAttribute("aria-label", `グッズ${index + 1}を表示`);
+      dot.addEventListener("click", () => renderGoods(index));
+      els.goodsDots.appendChild(dot);
+    });
+  }
+
+  els.goodsPrev?.addEventListener("click", () => renderGoods(state.goodsIndex - 1));
+  els.goodsNext?.addEventListener("click", () => renderGoods(state.goodsIndex + 1));
+
+  renderGoods(0);
+}
+
+async function loadAllData({ keepDate = false, manual = false } = {}) {
+  if (!els.ticketStatus) return;
+
+  const beforeSelectedDate = state.selectedDate;
+  const beforeWeekOffset = state.weekOffset;
+
+  els.ticketStatus.textContent = manual ? "チケット情報を再取得中..." : "最新情報を取得中...";
+  if (els.ticketRefreshButton) els.ticketRefreshButton.disabled = true;
+
+  try {
+    state.events = await Promise.all(EVENTS.map(fetchEventData));
+
+    const rawDates = state.events.flatMap((event) => event.dates.map((d) => d.date));
+    state.allDates = [...new Set(rawDates.filter((d) => d && d !== "常設"))].sort((a, b) => a.localeCompare(b));
+
+    if (!state.firstLoadDone || !state.baseWeekStart) {
+      state.baseWeekStart = getStartOfWeek(new Date());
+      setSelectedDateFromTodayIfPossible();
+      state.weekOffset = 0;
+    } else if (keepDate) {
+      state.selectedDate = beforeSelectedDate || getTodayYmd();
+      state.weekOffset = beforeWeekOffset;
+    }
+
+    renderDateDisplay();
+    renderDateStrip();
+    renderTickets();
+    renderGames();
+
+    const apiFailures = state.events.filter((event) => event.api && !event.apiOk);
+    if (apiFailures.length) {
+      els.ticketStatus.textContent = "一部APIの取得に失敗しました。手動設定分は表示しています。";
+    } else {
+      els.ticketStatus.textContent = "最新情報を反映しました。";
+    }
+
+    if (els.ticketUpdatedAt) {
+      els.ticketUpdatedAt.textContent = `更新日時: ${new Date().toLocaleString("ja-JP")}`;
+    }
+
+    const firstApi = EVENTS.find((event) => event.api)?.api;
+    if (els.ticketSource) {
+      els.ticketSource.textContent = firstApi ? "公演情報API" : "公演情報";
+      els.ticketSource.href = firstApi || "#";
+    }
+
+    state.firstLoadDone = true;
+  } catch (error) {
+    console.error("チケット情報の更新に失敗:", error);
+    els.ticketStatus.textContent = "チケット情報の更新に失敗しました。時間をおいて再度お試しください。";
+  } finally {
+    if (els.ticketRefreshButton) els.ticketRefreshButton.disabled = false;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
+  cacheElements();
+
+  initQuestionImage();
+  initDrawer();
+  initAnswerForm();
+  initJump();
+  initStaticLinks();
+  initTopicSlider();
+  initGoodsSlider();
+
+  els.prevWeek?.addEventListener("click", () => moveWeek(-1));
+  els.nextWeek?.addEventListener("click", () => moveWeek(1));
+  els.ticketRefreshButton?.addEventListener("click", () => loadAllData({ keepDate: true, manual: true }));
+
+  await loadAllData();
+  setInterval(() => loadAllData({ keepDate: true }), CONFIG.apiRefreshMs);
 });
