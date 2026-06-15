@@ -23,6 +23,22 @@ const EVENTS = [
     manualDates: [],
     rangeDates: [],
   },
+    {
+    title: "AIが作ったゲームからの脱出",
+    catch: "セレクトアンサーを攻略せよ。",
+    image: "assets/escape-ai-game.jpg",
+    detailUrl: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-06-20",
+        end: "2050-12-31",
+        slots: [
+          { startAt: "0:00", vacancyType: "NOT_SALE", url: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45" },
+        ],
+      },
+    ],
+  },
   {
     title: "とあるホテルの秘密",
     catch: "ホテルに隠された、衝撃の真実に迫れ—。",
