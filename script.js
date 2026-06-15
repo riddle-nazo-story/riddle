@@ -21,7 +21,7 @@ const CONFIG = {
 
   // 今週の一問の画像設定
   // index.html から見た画像フォルダ
-  questionImageFolder: "assets/questions/",
+  questionImageFolder: "assets/",
 
   // ここにファイル名だけを書く
   questionImageFile: "weekly-004.png",
