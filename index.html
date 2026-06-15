@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="ja">
 <head>
@@ -34,17 +35,26 @@
 
 <section id="topic">
   <h2>TOPIC</h2>
-  <div class="slider">
-    <a href="https://note.com/riddle_story/n/n003fef573b84" target="_blank">
-      <img src="topic1.jpg" class="slide active">
-    </a>
-    <a href="https://note.com/riddle_story/n/n1766b51dbdfe" target="_blank">
-      <img src="topic2.jpg" class="slide">
-    </a>
-    <a href="https://note.com/riddle_story" target="_blank">
-      <img src="topic3.jpg" class="slide">
-    </a>
+
+  <div class="topic-slider-wrap" aria-label="トピックス画像">
+    <button id="topicPrev" class="topic-control topic-control--prev" type="button" aria-label="前のトピックスを見る">‹</button>
+
+    <div id="topicSlider" class="slider">
+      <a href="https://note.com/riddle_story/n/n003fef573b84" target="_blank" rel="noopener noreferrer" class="topic-slide-link is-active">
+        <img src="topic1.jpg" class="slide active" alt="公式サイトリニューアル" />
+      </a>
+      <a href="https://note.com/riddle_story/n/n1766b51dbdfe" target="_blank" rel="noopener noreferrer" class="topic-slide-link">
+        <img src="topic2.jpg" class="slide" alt="仲間募集のお知らせ" />
+      </a>
+      <a href="https://note.com/riddle_story" target="_blank" rel="noopener noreferrer" class="topic-slide-link">
+        <img src="topic3.jpg" class="slide" alt="RIDDLE STORY note" />
+      </a>
+    </div>
+
+    <button id="topicNext" class="topic-control topic-control--next" type="button" aria-label="次のトピックスを見る">›</button>
   </div>
+
+  <div id="topicDots" class="topic-dots" aria-label="トピックス切り替え"></div>
 </section>
 
 <section id="news">
@@ -94,6 +104,7 @@
         <a id="ticketSource" href="#" target="_blank" rel="noopener noreferrer">
           公演情報
         </a>
+        <button id="ticketRefreshButton" class="ticket-refresh" type="button">チケット情報を更新</button>
       </div>
 
       <div id="ticketList" class="ticket-list"></div>
@@ -156,23 +167,18 @@
     <section id="goodsSection" class="section goods">
       <h2 class="section-title">GOODS</h2>
 
-      <div class="goods-panel">
-        <div class="goods-panel__title">おすすめ商品はこちら！</div>
+      <div class="goods-slider-wrap" aria-label="おすすめグッズ">
+        <button id="goodsPrev" class="goods-control goods-control--prev" type="button" aria-label="前のグッズを見る">‹</button>
 
-        <div class="goods-grid">
-          <!-- グッズカード -->
-          <a class="goods-card" href="https://nazo-shop.booth.pm/items/6993104" target="_blank" rel="noopener noreferrer">
-            <img src="assets/goods-1.jpg" alt="RIDDLE STORY グッズ1" />
-            <div class="goods-card__text">
-              RIDDLE STORYシリーズ<br/>
-              RIDDLE STORY 1 公式攻略本<br/>
-              1,000円(税込)
-            </div>
-          </a>
+        <div id="goodsSlider" class="goods-slider">
+          <!-- JSでグッズを表示 -->
         </div>
+
+        <button id="goodsNext" class="goods-control goods-control--next" type="button" aria-label="次のグッズを見る">›</button>
       </div>
 
-      <!-- 購入ボタン -->
+      <div id="goodsDots" class="goods-dots" aria-label="グッズ切り替え"></div>
+
       <div class="goods-cta">
         <a class="button-outline" href="https://nazo-shop.booth.pm/" target="_blank" rel="noopener noreferrer">
           公式ショップはこちらから
