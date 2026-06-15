@@ -16,9 +16,17 @@ setInterval(() => {
 const CONFIG = {
   apiRefreshMs: 5 * 60 * 1000,
 
-  // 画像URLを直接指定
-  questionImage: "https://previews.dropbox.com/p/thumb/ADBtlsxg5dCaHBeL5RWI0FI_jtaACLtYY3pTzFjeiJKs1TRJd8qosbv9_4KdUQ_A1MxIdk6NHL7zt97HrNi-TWQI8Qwu4xWoA49Yfy1ckfssjwKAcUnRwNG0REesCM4dSdV7-o9x6Ku-58jfUvKV9yPP5scGOKCGOawLWG-nLGlVvbWsypQqQxUStumXYJdICarjAH2Fxrt5XyfAOvdI5SmWR-NZAqZNLK1eu6rk5ZCWBjC-9qPG0zwY_4wb6MsSzT2Ulhj5oHoUFhyo41ZgE5ScmxsCZS1oSsuVrI3BbsvqUKz6Sw8z3p0vka-nFyhCoOgSUl2N6fCzTuO-x4EO5oJD/p.png?is_prewarmed=true",
-  correctAnswer: "ひさき",
+const CONFIG = {
+  apiRefreshMs: 5 * 60 * 1000,
+
+  // 今週の一問の画像設定
+  // index.html から見た画像フォルダ
+  questionImageFolder: "assets/questions/",
+
+  // ここにファイル名だけを書く
+  questionImageFile: "weekly-004.png",
+
+  correctAnswer: "AI",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
 };
