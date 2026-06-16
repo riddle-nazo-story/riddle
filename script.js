@@ -71,6 +71,33 @@ const EVENTS = [
       },
     ],
   },
+{
+  title: "【アーカイブ】RIDDLE STORY 2",
+  catch: "███を救いだせ！！",
+  image: "assets/riddlestory2.jpg",
+  detailUrl: "https://nazo-shop.booth.pm/items/7303330",
+  api: null,
+  rangeDates: [
+    {
+      start: "2025-07-15",
+      end: "2050-07-14",
+      slots: [
+        {
+          startAt: "0:00",
+          label: "紙版",
+          vacancyType: "ON_SALE",
+          url: "https://nazo-shop.booth.pm/items/7303330"
+        },
+        {
+          startAt: "0:00",
+          label: "電子版",
+          vacancyType: "ON_SALE",
+          url: "https://nazo-shop.booth.pm/items/7303330"
+        },
+      ],
+    },
+  ],
+},
   {
     title: "【アーカイブ】RIDDLE STORY 2",
     catch: "███を救いだせ！！",
