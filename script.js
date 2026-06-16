@@ -23,38 +23,54 @@ const EVENTS = [
     manualDates: [],
     rangeDates: [],
   },
-    {
-    title: "AIが作ったゲームからの脱出",
-    catch: "セレクトアンサーを攻略せよ。",
-    image: "assets/escape-ai-game.jpg",
-    detailUrl: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45",
-    api: null,
-    rangeDates: [
-      {
-        start: "2026-06-20",
-        end: "2050-12-31",
-        slots: [
-          { startAt: "0:00", vacancyType: "NOT_SALE", url: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45" },
-        ],
-      },
-    ],
-  },
   {
-    title: "とあるホテルの秘密",
-    catch: "ホテルに隠された、衝撃の真実に迫れ—。",
-    image: "assets/hotel.jpg",
-    detailUrl: "https://shop.daiyonkyokai.net/products/26030302?srsltid=AfmBOort5suGu_p4YT1jxlBUvmQoRywWc4zYJ0bB9Qm_Wv33BuevGOr_",
-    api: null,
-    rangeDates: [
-      {
-        start: "2026-02-07",
-        end: "2050-12-31",
-        slots: [
-          { startAt: "0:00", vacancyType: "ON_SALE", url: "https://riddle-nazo-story.github.io/4-start/" },
-        ],
-      },
-    ],
-  },
+  title: "AIが作ったゲームからの脱出",
+  catch: "セレクトアンサーを攻略せよ。",
+  image: "assets/escape-ai-game.jpg",
+  detailUrl: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45",
+  api: null,
+  rangeDates: [
+    {
+      start: "2026-06-20",
+      end: "2050-07-14",
+      slots: [
+        {
+          startAt: "0:00",
+          label: "オンライン版",
+          vacancyType: "NOT_SALE",
+          url: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45"
+        },
+      ],
+    },
+  ],
+},
+  {
+  title: "とあるホテルの秘密",
+  catch: "ホテルに隠された、衝撃の真実に迫れ—。",
+  image: "assets/hotel.jpg",
+  detailUrl: "https://shop.daiyonkyokai.net/products/26030302?srsltid=AfmBOort5suGu_p4YT1jxlBUvmQoRywWc4zYJ0bB9Qm_Wv33BuevGOr_",
+  api: null,
+  rangeDates: [
+    {
+      start: "2026-02-07",
+      end: "2050-07-14",
+      slots: [
+        {
+          startAt: "0:00",
+          label: "オンライン版",
+          vacancyType: "ON_SALE",
+          url: "https://riddle-nazo-story.github.io/4-start/"
+        },
+        {
+          startAt: "0:00",
+          label: "パッケージ版",
+          vacancyType: "ON_SALE",
+          url: "https://nazo-shop.booth.pm/items/7821674"
+        },
+      ],
+    },
+  ],
+},
   {
     title: "RIDDLE STORY 1",
     catch: "█████の願いを叶えよう。",
@@ -99,37 +115,32 @@ const EVENTS = [
   ],
 },
   {
-    title: "【アーカイブ】RIDDLE STORY 2",
-    catch: "███を救いだせ！！",
-    image: "assets/riddlestory2.jpg",
-    detailUrl: "https://nazo-shop.booth.pm/items/7303330",
-    api: null,
-    rangeDates: [
-      {
-        start: "2025-07-15",
-        end: "2050-07-14",
-        slots: [
-          { startAt: "0:00", vacancyType: "ON_SALE", url: "https://nazo-shop.booth.pm/items/7303330" },
-        ],
-      },
-    ],
-  },
-  {
-    title: "【アーカイブ】RIDDLE STORY 1",
-    catch: "█████の願いを叶えよう。",
-    image: "assets/riddlestory1.jpg",
-    detailUrl: "https://nazo-shop.booth.pm/items/6993104",
-    api: null,
-    rangeDates: [
-      {
-        start: "2025-05-15",
-        end: "2050-05-14",
-        slots: [
-          { startAt: "0:00", vacancyType: "ON_SALE", url: "https://nazo-shop.booth.pm/items/6993104" },
-        ],
-      },
-    ],
-  },
+  title: "【アーカイブ】RIDDLE STORY 1",
+  catch: "█████の願いを叶えよう。",
+  image: "assets/riddlestory1.jpg",
+  detailUrl: "https://nazo-shop.booth.pm/items/6993104",
+  api: null,
+  rangeDates: [
+    {
+      start: "2025-07-15",
+      end: "2050-07-14",
+      slots: [
+        {
+          startAt: "0:00",
+          label: "紙版",
+          vacancyType: "FEW_LEFT",
+          url: "https://nazo-shop.booth.pm/items/6993104"
+        },
+        {
+          startAt: "0:00",
+          label: "電子版",
+          vacancyType: "ON_SALE",
+          url: "https://nazo-shop.booth.pm/items/7059571"
+        },
+      ],
+    },
+  ],
+},
   {
     title: "RIDDLE STORY 2",
     catch: "███を救いだせ！！",
