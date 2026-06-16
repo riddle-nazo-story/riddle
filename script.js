@@ -85,8 +85,8 @@ const EVENTS = [
         {
           startAt: "0:00",
           label: "紙版",
-          vacancyType: "ON_SALE",
-          url: "https://nazo-shop.booth.pm/items/7303330"
+          vacancyType: "SOLD_OUT",
+          url: "https://nazo-shop.booth.pm/items/7217781"
         },
         {
           startAt: "0:00",
@@ -661,8 +661,13 @@ function formatTimePart(value) {
 }
 
 function formatTimeLabel(slot) {
+  if (slot.label) {
+    return slot.label;
+  }
+
   const start = formatTimePart(slot.startAt);
   const end = formatTimePart(slot.endAt);
+
   if (!start && !end) return "随時";
   if (start && !end) return `${start}-`;
   return `${start} - ${end}`;
