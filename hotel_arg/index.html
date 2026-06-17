@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>とあるホテルの秘密｜RIDDLE STORY</title>
+  <meta name="description" content="オンラインARG『とあるホテルの秘密』特設サイト。ホテルに隠された記録を調査し、真実へたどり着け。" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="site-bg"></div>
+  <div class="noise-layer" aria-hidden="true"></div>
+  <div class="scanline-layer" aria-hidden="true"></div>
+  <div class="screen-flash" id="screenFlash" aria-hidden="true"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" id="brandMark">4</span>
+        <span class="brand-name" id="brandName">RIDDLE STORY</span>
+      </a>
+
+      <button class="menu-button" id="menuButton" aria-label="メニューを開く">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav" id="nav">
+        <a href="#news">NEWS</a>
+        <a href="#story">STORY</a>
+        <a href="#features">SYSTEM</a>
+        <a href="#terminal">TERMINAL</a>
+        <a href="#howto">PLAY</a>
+        <a href="#ticket">TICKET</a>
+        <a href="#notice">NOTICE</a>
+        <a href="#ticket" class="ticket-link">調査を始める</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <div class="system-status" id="systemStatus">
+            <span class="status-dot"></span>
+            <span>好評開催中</span>
+          </div>
+
+          <p class="hero-kicker" id="heroKicker">ONLINE ARG</p>
+          <h1 class="hero-title glitch" id="mainTitle" data-text="とあるホテルの秘密">とあるホテルの秘密</h1>
+          <p class="hero-subtitle" id="catchCopy">ホテル内を探索し、衝撃の真実に迫れ──！</p>
+          <p class="hero-lead" id="leadText">
+            RIDDLE STORY最新作ARG<br>Web探索、ホテル内探索などを駆使し、ホテルの真相に迫れ──！</p>
+
+          <div class="hero-buttons">
+            <a href="#ticket" class="btn primary">チケット概要</a>
+            <a href="#story" class="btn secondary">ストーリーを読む</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel error-flicker">
+          <div class="visual" id="visualArea">
+            <div class="visual-placeholder">
+              <div class="visual-symbol" id="visualSymbol">404</div>
+              <p>MAIN VISUAL<br>NOT FOUND</p>
+            </div>
+          </div>
+          <dl class="spec-list" id="specList"></dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="paper-section" id="news">
+      <div class="section-inner">
+        <div class="section-head dark-text">
+          <div class="section-kicker">NEWS</div>
+          <h2 class="section-title">更新記録</h2>
+          <p class="section-lead">ホテル管理端末に残された更新ログです。</p>
+        </div>
+        <div class="news-box" id="newsList"></div>
+      </div>
+    </section>
+
+    <section id="story">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">STORY</div>
+          <h2 class="section-title">ストーリー</h2>
+          <p class="section-lead" id="storyLead">あるホテルの管理端末に、不可解な記録が残されていた。</p>
+        </div>
+        <div class="story-box corrupted-box" id="storyText"></div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">SYSTEM</div>
+          <h2 class="section-title">調査できる記録</h2>
+          <p class="section-lead">スマホでは左右の矢印で1枚ずつスライドできます。途中で見切れないよう、中央に止まる設定です。</p>
+        </div>
+
+        <div class="slider-shell" data-slider-shell>
+          <button class="slide-button prev" data-slider-prev="featureList" aria-label="前へ">‹</button>
+          <div class="slider-track" id="featureList" tabindex="0" aria-label="調査できる記録のスライダー"></div>
+          <button class="slide-button next" data-slider-next="featureList" aria-label="次へ">›</button>
+          <div class="slider-dots" id="featureDots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="terminal-section" id="terminal">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">TERMINAL</div>
+          <h2 class="section-title">端末エラー</h2>
+          <p class="section-lead">正常な記録の中に、時折“壊れた情報”が混ざっています。</p>
+        </div>
+
+        <div class="terminal-window">
+          <div class="terminal-head">
+            <span></span><span></span><span></span>
+            <strong>hotel_secret_terminal.log</strong>
+          </div>
+          <pre id="terminalLog" aria-live="polite"></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="howto">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">HOW TO PLAY</div>
+          <h2 class="section-title">遊び方</h2>
+          <p class="section-lead">ゲームページにアクセスし、ホテルに残された情報を調査していきます。</p>
+        </div>
+        <div class="how-list" id="howList"></div>
+      </div>
+    </section>
+
+    <section class="paper-section" id="ticket">
+      <div class="section-inner">
+        <div class="section-head dark-text">
+          <div class="section-kicker">TICKET</div>
+          <h2 class="section-title">チケット情報</h2>
+          <p class="section-lead" id="ticketLead">購入後、ゲーム開始ページのURLをご確認ください。</p>
+        </div>
+
+        <div class="slider-shell paper-slider" data-slider-shell>
+          <button class="slide-button prev" data-slider-prev="ticketList" aria-label="前へ">‹</button>
+          <div class="slider-track ticket-track" id="ticketList" tabindex="0" aria-label="チケット情報のスライダー"></div>
+          <button class="slide-button next" data-slider-next="ticketList" aria-label="次へ">›</button>
+          <div class="slider-dots" id="ticketDots" aria-hidden="true"></div>
+        </div>
+
+        <table class="info-table" id="gameInfoTable"></table>
+      </div>
+    </section>
+
+    <section id="notice">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">NOTICE</div>
+          <h2 class="section-title">注意事項</h2>
+          <p class="section-lead">ご購入前に必ずご確認ください。</p>
+        </div>
+        <div class="notice-wrap" id="noticeList"></div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="section-inner">
+        <p class="cta-error">[SYSTEM] ROOM DATA RESTORED</p>
+        <h2 id="ctaTitle">あなたは、このホテルの秘密に辿り着けるか。</h2>
+        <p id="ctaText">すべての記録は、まだ削除されていない。</p>
+        <a href="#" class="btn primary" id="ctaButton" target="_blank" rel="noopener">調査を始める</a>
+      </div>
+    </section>
+  </main>
+
+  <div class="fake-error" id="fakeError" aria-hidden="true">
+    <div class="fake-error-title">SYSTEM ERROR</div>
+    <div class="fake-error-text" id="fakeErrorText">記録の復元に失敗しました。</div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div id="copyright">© RIDDLE STORY</div>
+      <div>RIDDLE STORY 4 / HOTEL SECRET ARCHIVE</div>
+    </div>
+  </footer>
+
+  <button class="top-button" id="topButton" aria-label="上へ戻る">↑</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
