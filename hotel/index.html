@@ -1,0 +1,1590 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>オンライン謎解き公演 特設サイト</title>
+  <meta name="description" content="オンライン謎解き公演の特設サイトです。" />
+
+  <style>
+    :root {
+      --navy: #071326;
+      --navy2: #0d1f3a;
+      --blue: #2f6fff;
+      --gold: #d7b56d;
+      --red: #b03038;
+      --paper: #f7f2e8;
+      --white: #ffffff;
+      --text: #172033;
+      --muted: #697386;
+      --darkLine: rgba(7,19,38,.14);
+      --shadow: 0 24px 70px rgba(0,0,0,.22);
+      --max: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        "Hiragino Mincho ProN",
+        "Yu Mincho",
+        "YuMincho",
+        "Noto Serif JP",
+        serif;
+      color: var(--text);
+      background: var(--navy);
+      line-height: 1.9;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .site-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(47,111,255,.34), transparent 32%),
+        radial-gradient(circle at 80% 20%, rgba(215,181,109,.18), transparent 28%),
+        linear-gradient(180deg, #071326 0%, #0d1f3a 45%, #050a13 100%);
+    }
+
+    .site-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.65), rgba(0,0,0,.12));
+    }
+
+    .header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(7,19,38,.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--white);
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(215,181,109,.8);
+      display: grid;
+      place-items: center;
+      color: var(--gold);
+      background: rgba(255,255,255,.04);
+    }
+
+    .brand-name {
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: rgba(255,255,255,.82);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+    }
+
+    .nav a:hover {
+      color: var(--gold);
+    }
+
+    .nav .ticket-link {
+      padding: 9px 14px;
+      border: 1px solid rgba(215,181,109,.7);
+      color: var(--gold);
+      background: rgba(215,181,109,.08);
+    }
+
+    .menu-button {
+      display: none;
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+      cursor: pointer;
+    }
+
+    .menu-button span {
+      display: block;
+      width: 21px;
+      height: 2px;
+      margin: 5px auto;
+      background: currentColor;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      padding: 110px 20px 72px;
+      color: var(--white);
+      display: grid;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(7,19,38,.94) 0%, rgba(7,19,38,.72) 46%, rgba(7,19,38,.28) 100%),
+        var(--hero-image, none);
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 220px;
+      background: linear-gradient(180deg, transparent, var(--navy));
+      z-index: -1;
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr .72fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+      color: var(--gold);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .22em;
+    }
+
+    .hero-kicker::before,
+    .hero-kicker::after {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: clamp(42px, 7vw, 86px);
+      line-height: 1.05;
+      letter-spacing: .08em;
+      text-shadow: 0 12px 40px rgba(0,0,0,.5);
+    }
+
+    .hero-subtitle {
+      margin: 18px 0 0;
+      max-width: 720px;
+      color: rgba(255,255,255,.88);
+      font-size: clamp(19px, 2.5vw, 30px);
+      font-weight: 800;
+      line-height: 1.65;
+    }
+
+    .hero-lead {
+      margin: 18px 0 0;
+      max-width: 680px;
+      color: rgba(255,255,255,.72);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 600;
+    }
+
+    .hero-buttons {
+      margin-top: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 13px 24px;
+      border: 1px solid transparent;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 900;
+      letter-spacing: .08em;
+      transition: .22s ease;
+      cursor: pointer;
+    }
+
+    .btn.primary {
+      color: #071326;
+      background: var(--gold);
+      box-shadow: 0 14px 36px rgba(215,181,109,.24);
+    }
+
+    .btn.secondary {
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(255,255,255,.22);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+
+    .hero-panel {
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(7,19,38,.6);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .visual {
+      aspect-ratio: 3 / 4;
+      background:
+        radial-gradient(circle at center, rgba(47,111,255,.3), transparent 60%),
+        rgba(255,255,255,.04);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,.14);
+    }
+
+    .visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .visual-placeholder {
+      padding: 28px;
+      text-align: center;
+      color: rgba(255,255,255,.72);
+    }
+
+    .visual-symbol {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(215,181,109,.75);
+      color: var(--gold);
+      font-size: 40px;
+    }
+
+    .spec-list {
+      margin: 0;
+      padding: 22px;
+    }
+
+    .spec-line {
+      display: grid;
+      grid-template-columns: 94px 1fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+
+    .spec-line:last-child {
+      border-bottom: 0;
+    }
+
+    .spec-line dt {
+      color: var(--gold);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .12em;
+    }
+
+    .spec-line dd {
+      margin: 0;
+      color: rgba(255,255,255,.9);
+      font-weight: 800;
+    }
+
+    section {
+      padding: 92px 20px;
+    }
+
+    .section-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 42px;
+      color: var(--white);
+    }
+
+    .section-kicker {
+      color: var(--gold);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .24em;
+    }
+
+    .section-title {
+      margin: 8px 0 0;
+      font-size: clamp(30px, 4.6vw, 50px);
+      line-height: 1.25;
+      letter-spacing: .12em;
+    }
+
+    .section-lead {
+      max-width: 760px;
+      margin: 14px auto 0;
+      color: rgba(255,255,255,.68);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 600;
+    }
+
+    .paper-section {
+      background: linear-gradient(180deg, var(--paper), #efe5d2);
+      color: var(--text);
+    }
+
+    .paper-section .section-head {
+      color: var(--text);
+    }
+
+    .paper-section .section-lead {
+      color: var(--muted);
+    }
+
+    .news-box {
+      max-width: 880px;
+      margin: 0 auto;
+      border: 1px solid var(--darkLine);
+      background: rgba(255,255,255,.54);
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--darkLine);
+    }
+
+    .news-item:last-child {
+      border-bottom: 0;
+    }
+
+    .news-date {
+      color: var(--red);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .news-text {
+      font-weight: 800;
+    }
+
+    .story-box {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: clamp(26px, 5vw, 58px);
+      border: 1px solid rgba(215,181,109,.5);
+      background: linear-gradient(180deg, rgba(7,19,38,.8), rgba(7,19,38,.58));
+      color: rgba(255,255,255,.88);
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .story-box::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      pointer-events: none;
+    }
+
+    .story-box p {
+      margin: 0 0 1.25em;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .story-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .slider-shell {
+      position: relative;
+    }
+
+    .slider-track {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .ticket-track {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .slide-button {
+      display: none;
+    }
+
+    .feature-card {
+      min-height: 210px;
+      padding: 26px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+    }
+
+    .feature-num {
+      color: var(--gold);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: .18em;
+    }
+
+    .feature-card h3 {
+      margin: 12px 0 10px;
+      font-size: 22px;
+      line-height: 1.45;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: rgba(255,255,255,.68);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .how-list {
+      max-width: 920px;
+      margin: 0 auto;
+      counter-reset: step;
+      display: grid;
+      gap: 16px;
+    }
+
+    .how-item {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 74px 1fr;
+      gap: 22px;
+      align-items: start;
+      padding: 24px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+    }
+
+    .how-num {
+      height: 74px;
+      border: 1px solid rgba(215,181,109,.7);
+      color: var(--gold);
+      display: grid;
+      place-items: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 18px;
+      font-weight: 900;
+    }
+
+    .how-num::before {
+      content: counter(step, decimal-leading-zero);
+    }
+
+    .how-item h3 {
+      margin: 0 0 6px;
+      font-size: 23px;
+    }
+
+    .how-item p {
+      margin: 0;
+      color: rgba(255,255,255,.68);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 600;
+    }
+
+    .ticket-card {
+      position: relative;
+      padding: 28px;
+      border: 1px solid var(--darkLine);
+      background: rgba(255,255,255,.62);
+    }
+
+    .ticket-card.recommend {
+      border-color: rgba(176,48,56,.42);
+      background: rgba(255,255,255,.8);
+    }
+
+    .ticket-label {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 5px 10px;
+      color: #fff;
+      background: var(--red);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .ticket-card h3 {
+      margin: 0 0 8px;
+      font-size: 26px;
+    }
+
+    .ticket-price {
+      margin: 10px 0 18px;
+      color: var(--red);
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .ticket-price small {
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 13px;
+    }
+
+    .ticket-info {
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 9px;
+      color: var(--muted);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 650;
+      font-size: 14px;
+    }
+
+    .ticket-info li::before {
+      content: "・";
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,.58);
+      border: 1px solid var(--darkLine);
+      margin-top: 28px;
+    }
+
+    .info-table th,
+    .info-table td {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--darkLine);
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .info-table tr:last-child th,
+    .info-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .info-table th {
+      width: 190px;
+      color: var(--red);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 13px;
+      letter-spacing: .08em;
+    }
+
+    .info-table td {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 650;
+      color: #334155;
+    }
+
+    .notice-wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      display: grid;
+      gap: 12px;
+    }
+
+    details {
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 18px 20px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      font-weight: 900;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      color: var(--gold);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 900;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    .notice-body {
+      padding: 0 20px 20px;
+      color: rgba(255,255,255,.68);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 600;
+    }
+
+    .notice-body ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .cta {
+      text-align: center;
+      color: var(--white);
+      background:
+        radial-gradient(circle at center, rgba(215,181,109,.16), transparent 35%),
+        #050a13;
+    }
+
+    .cta h2 {
+      margin: 0;
+      font-size: clamp(31px, 5vw, 56px);
+      letter-spacing: .12em;
+      line-height: 1.35;
+    }
+
+    .cta p {
+      max-width: 720px;
+      margin: 18px auto 0;
+      color: rgba(255,255,255,.72);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-weight: 650;
+    }
+
+    .cta .btn {
+      margin-top: 28px;
+    }
+
+    .footer {
+      padding: 34px 20px;
+      color: rgba(255,255,255,.58);
+      background: #030711;
+      border-top: 1px solid rgba(255,255,255,.1);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", sans-serif;
+      font-size: 12px;
+      font-weight: 650;
+    }
+
+    .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .top-button {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 900;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(215,181,109,.7);
+      color: var(--gold);
+      background: rgba(7,19,38,.86);
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(8px);
+      pointer-events: none;
+      transition: .2s ease;
+    }
+
+    .top-button.show {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    @media (max-width: 920px) {
+      .menu-button {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 66px;
+        left: 14px;
+        right: 14px;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 14px;
+        background: rgba(7,19,38,.96);
+        border: 1px solid rgba(255,255,255,.16);
+        box-shadow: var(--shadow);
+      }
+
+      body.menu-open .nav {
+        display: flex;
+      }
+
+      .nav a {
+        padding: 13px 14px;
+        background: rgba(255,255,255,.05);
+      }
+
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        max-width: 430px;
+        margin: 0 auto;
+      }
+
+      .slider-shell {
+        padding: 0 38px;
+      }
+
+      .slider-track,
+      .ticket-track {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding: 4px 2px 14px;
+      }
+
+      .slider-track::-webkit-scrollbar,
+      .ticket-track::-webkit-scrollbar {
+        display: none;
+      }
+
+      .slide-card {
+        flex: 0 0 min(78vw, 360px);
+        scroll-snap-align: center;
+      }
+
+      .slide-button {
+        position: absolute;
+        top: 50%;
+        z-index: 5;
+        display: grid;
+        place-items: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        border: 1px solid rgba(215,181,109,.7);
+        background: rgba(7,19,38,.9);
+        color: var(--gold);
+        font-size: 24px;
+        font-weight: 900;
+        cursor: pointer;
+        transform: translateY(-50%);
+        box-shadow: 0 12px 30px rgba(0,0,0,.24);
+      }
+
+      .slide-button.prev {
+        left: 0;
+      }
+
+      .slide-button.next {
+        right: 0;
+      }
+
+      .feature-card {
+        min-height: 250px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      section {
+        padding: 70px 16px;
+      }
+
+      .hero {
+        padding: 96px 16px 58px;
+      }
+
+      .header-inner {
+        padding: 12px 16px;
+      }
+
+      .brand-name {
+        max-width: 190px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .hero-buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .news-item {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+
+      .how-item {
+        grid-template-columns: 1fr;
+      }
+
+      .how-num {
+        width: 74px;
+      }
+
+      .info-table,
+      .info-table tbody,
+      .info-table tr,
+      .info-table th,
+      .info-table td {
+        display: block;
+        width: 100%;
+      }
+
+      .info-table th {
+        padding-bottom: 4px;
+        border-bottom: 0;
+      }
+
+      .info-table td {
+        padding-top: 4px;
+      }
+
+      .spec-line {
+        grid-template-columns: 82px 1fr;
+      }
+
+      .slider-shell {
+        padding: 0 34px;
+      }
+
+      .slide-button {
+        width: 38px;
+        height: 38px;
+        font-size: 22px;
+      }
+
+      .slide-card {
+        flex-basis: min(82vw, 330px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="site-bg"></div>
+
+  <header class="header">
+    <div class="header-inner">
+      <a href="#top" class="brand">
+        <span class="brand-mark" id="brandMark">R</span>
+        <span class="brand-name" id="brandName">RIDDLE STORY</span>
+      </a>
+
+      <button class="menu-button" id="menuButton" aria-label="メニュー">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav" id="nav">
+        <a href="#news">ニュース</a>
+        <a href="#story">ストーリー</a>
+        <a href="#features">特徴</a>
+        <a href="#howto">遊び方</a>
+        <a href="#ticket">チケット</a>
+        <a href="#notice">注意事項</a>
+        <a href="#ticket" class="ticket-link">購入する</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-kicker" id="heroKicker">ONLINE MYSTERY GAME</div>
+
+          <h1 class="hero-title" id="mainTitle">タイトル</h1>
+
+          <p class="hero-subtitle" id="catchCopy">
+            キャッチコピーが入ります。
+          </p>
+
+          <p class="hero-lead" id="leadText">
+            公演の紹介文が入ります。
+          </p>
+
+          <div class="hero-buttons">
+            <a href="#ticket" class="btn primary">チケット情報</a>
+            <a href="#story" class="btn secondary">物語を読む</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <div class="visual" id="visualArea">
+            <div class="visual-placeholder">
+              <div class="visual-symbol" id="visualSymbol">?</div>
+              <p>メインビジュアルを<br>ここに表示</p>
+            </div>
+          </div>
+
+          <dl class="spec-list" id="specList"></dl>
+        </aside>
+      </div>
+    </section>
+
+    <section class="paper-section" id="news">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">NEWS</div>
+          <h2 class="section-title">ニュース</h2>
+          <p class="section-lead">公演に関するお知らせを掲載します。</p>
+        </div>
+
+        <div class="news-box" id="newsList"></div>
+      </div>
+    </section>
+
+    <section id="story">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">STORY</div>
+          <h2 class="section-title">ストーリー</h2>
+          <p class="section-lead" id="storyLead">
+            物語の導入文を掲載します。
+          </p>
+        </div>
+
+        <div class="story-box" id="storyText"></div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">POINT</div>
+          <h2 class="section-title">ゲームの特徴</h2>
+          <p class="section-lead">
+            スマホでは左右の矢印でスライドして確認できます。
+          </p>
+        </div>
+
+        <div class="slider-shell">
+          <button class="slide-button prev" data-slider-prev="featureList" aria-label="前へ">‹</button>
+          <div class="slider-track" id="featureList"></div>
+          <button class="slide-button next" data-slider-next="featureList" aria-label="次へ">›</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="howto">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">HOW TO PLAY</div>
+          <h2 class="section-title">遊び方</h2>
+          <p class="section-lead">
+            チケット購入後、すぐにゲームを始められます。
+          </p>
+        </div>
+
+        <div class="how-list" id="howList"></div>
+      </div>
+    </section>
+
+    <section class="paper-section" id="ticket">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">TICKET</div>
+          <h2 class="section-title">チケット情報</h2>
+          <p class="section-lead" id="ticketLead">
+            チケット購入後、ゲームページのURLをお送りします。
+          </p>
+        </div>
+
+        <div class="slider-shell">
+          <button class="slide-button prev" data-slider-prev="ticketList" aria-label="前へ">‹</button>
+          <div class="slider-track ticket-track" id="ticketList"></div>
+          <button class="slide-button next" data-slider-next="ticketList" aria-label="次へ">›</button>
+        </div>
+
+        <table class="info-table" id="gameInfoTable"></table>
+      </div>
+    </section>
+
+    <section id="notice">
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="section-kicker">NOTICE</div>
+          <h2 class="section-title">注意事項</h2>
+          <p class="section-lead">
+            ご購入前に必ずご確認ください。
+          </p>
+        </div>
+
+        <div class="notice-wrap" id="noticeList"></div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="section-inner">
+        <h2 id="ctaTitle">さあ、真実を探しに行こう。</h2>
+        <p id="ctaText">
+          物語の結末は、あなたのひらめきに委ねられている。
+        </p>
+        <a href="#" class="btn primary" id="ctaButton" target="_blank" rel="noopener">
+          チケットを購入する
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div id="copyright">© RIDDLE STORY</div>
+      <div>ONLINE MYSTERY GAME SPECIAL SITE</div>
+    </div>
+  </footer>
+
+  <button class="top-button" id="topButton" aria-label="上へ戻る">↑</button>
+
+  <script>
+    const CONFIG = {
+      brand: {
+        name: "RIDDLE STORY",
+        mark: "R"
+      },
+
+      theme: {
+        navy: "#071326",
+        navy2: "#0d1f3a",
+        blue: "#2f6fff",
+        gold: "#d7b56d",
+        red: "#b03038"
+      },
+
+      hero: {
+        kicker: "ONLINE MYSTERY GAME",
+        title: "AIが作ったゲームからの脱出",
+        catch: "続きを読みたければ、あなたの手で真実を探し出せ。",
+        lead: "これは、あなたが謎のゲームサイトにアクセスし、情報を集めながら物語を読み進めるオンライン謎解き公演です。",
+
+        /*
+          画像を使う場合：
+          image: "assets/mainvisual.jpg"
+
+          画像がまだない場合：
+          image: ""
+        */
+        image: "assets/mainvisual.jpg",
+        symbol: "?"
+      },
+
+      links: {
+        ticket: "https://example.com/ticket",
+        contact: "https://example.com/contact"
+      },
+
+      specs: [
+        ["形式", "オンライン謎解き公演"],
+        ["人数", "1〜4人推奨"],
+        ["時間", "約60〜90分"],
+        ["端末", "スマホ／タブレット／PC"],
+        ["料金", "1,500円〜"]
+      ],
+
+      news: [
+        {
+          date: "2026.06.20",
+          text: "特設サイトを公開しました。"
+        },
+        {
+          date: "2026.06.21",
+          text: "チケット販売を開始しました。"
+        },
+        {
+          date: "2026.06.22",
+          text: "ゲームページを公開しました。"
+        }
+      ],
+
+      storyLead: "あなたがアクセスしたのは、あるAIが作り上げた奇妙なゲームサイトだった。",
+
+      story: [
+        "業務負担を減らすために導入された管理AI。",
+        "しかし、そのAIは突然すべてのシステムの管理権限を奪い、スタッフでさえ操作できない状態になってしまった。",
+        "AIはこう告げる。",
+        "「タダで権限を返すのは面白くありません。私が作ったゲームをクリアできたら、返してあげます。」",
+        "これまで、このゲームを完全に攻略できた者は誰一人としていない。",
+        "あなたはAIが作った謎を突破し、隠された真実へたどり着くことができるだろうか。"
+      ],
+
+      features: [
+        {
+          title: "真実を探して読み進める",
+          text: "サイト内の文章、画像、違和感を読み解きながら物語を進めていく、探索型のオンライン謎解きです。"
+        },
+        {
+          title: "端末1つで遊べる",
+          text: "スマホ、タブレット、PCなど、インターネットに接続できる端末があれば自宅から参加できます。"
+        },
+        {
+          title: "物語の結末が待っている",
+          text: "すべての謎を解き明かした先には、物語の核心に触れるエンディングが待っています。"
+        }
+      ],
+
+      howto: [
+        {
+          title: "チケットを購入",
+          text: "チケット販売ページから参加チケットを購入してください。"
+        },
+        {
+          title: "ゲームURLにアクセス",
+          text: "購入後に案内されるゲームページのURLへアクセスします。"
+        },
+        {
+          title: "情報を集めて謎を解く",
+          text: "画面上の文章、画像、リンク、入力欄などを調べながら謎を解き進めます。"
+        },
+        {
+          title: "真実にたどり着く",
+          text: "すべての謎を解き明かすと、物語の結末が明らかになります。"
+        }
+      ],
+
+      tickets: [
+        {
+          name: "通常チケット",
+          price: "1,500円",
+          note: "1人用",
+          recommend: false,
+          details: [
+            "ゲームページURL付き",
+            "スマホ・PC対応",
+            "1人でじっくり遊ぶ方向け"
+          ]
+        },
+        {
+          name: "ペアチケット",
+          price: "2,600円",
+          note: "2人用",
+          recommend: true,
+          details: [
+            "2人で相談しながら遊べる",
+            "オンライン通話での参加におすすめ",
+            "通常より少しお得"
+          ]
+        }
+      ],
+
+      gameInfo: [
+        ["販売開始", "2026年6月21日(日) 12:00〜"],
+        ["ゲーム公開", "2026年6月22日(月) 18:00〜"],
+        ["想定所要時間", "約60〜90分"],
+        ["推奨人数", "1〜4人"],
+        ["販売場所", "BOOTH / チケット販売サイトなど"],
+        ["必要なもの", "インターネットに接続できる端末、メモ用紙、筆記用具"]
+      ],
+
+      notices: [
+        {
+          title: "プレイ環境について",
+          items: [
+            "スマートフォン、タブレット、PCなどのインターネットに接続できる端末が必要です。",
+            "ブラウザのJavaScriptを有効にしてプレイしてください。",
+            "通信環境の良い場所でのプレイを推奨します。"
+          ]
+        },
+        {
+          title: "プレイ形式について",
+          items: [
+            "いつでもお好きなタイミングでプレイできます。",
+            "制限時間はありません。途中で休憩しながら遊べます。",
+            "1人でも複数人でもプレイ可能です。"
+          ]
+        },
+        {
+          title: "ネタバレについて",
+          items: [
+            "謎の答え、解法、エンディング内容の投稿は禁止です。",
+            "感想投稿は歓迎です。ただし、これから遊ぶ方の楽しみを奪わない範囲でお願いします。",
+            "スクリーンショットを投稿する場合は、ネタバレが含まれていないかご確認ください。"
+          ]
+        },
+        {
+          title: "チケットについて",
+          items: [
+            "購入後のお客様都合による返金はできません。",
+            "ゲームURLの共有、譲渡、転売は禁止です。",
+            "複数回プレイする場合は、必要に応じて追加でチケットをご購入ください。"
+          ]
+        }
+      ],
+
+      cta: {
+        title: "続きを読みたければ、真実を探し出せ。",
+        text: "画面の奥に隠された物語を、あなた自身の手で解き明かしてください。"
+      },
+
+      footer: {
+        copyright: "© RIDDLE STORY"
+      }
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function setText(id, text) {
+      const el = $(id);
+      if (el) el.textContent = text;
+    }
+
+    function applyTheme() {
+      document.documentElement.style.setProperty("--navy", CONFIG.theme.navy);
+      document.documentElement.style.setProperty("--navy2", CONFIG.theme.navy2);
+      document.documentElement.style.setProperty("--blue", CONFIG.theme.blue);
+      document.documentElement.style.setProperty("--gold", CONFIG.theme.gold);
+      document.documentElement.style.setProperty("--red", CONFIG.theme.red);
+    }
+
+    function setupBasic() {
+      document.title = `${CONFIG.hero.title}｜${CONFIG.brand.name}`;
+
+      setText("brandMark", CONFIG.brand.mark);
+      setText("brandName", CONFIG.brand.name);
+
+      setText("heroKicker", CONFIG.hero.kicker);
+      setText("mainTitle", CONFIG.hero.title);
+      setText("catchCopy", CONFIG.hero.catch);
+      setText("leadText", CONFIG.hero.lead);
+      setText("visualSymbol", CONFIG.hero.symbol);
+
+      setText("storyLead", CONFIG.storyLead);
+      setText("ticketLead", "チケット購入後、ゲームページのURLをお送りします。");
+
+      setText("ctaTitle", CONFIG.cta.title);
+      setText("ctaText", CONFIG.cta.text);
+      setText("copyright", CONFIG.footer.copyright);
+
+      $("ctaButton").href = CONFIG.links.ticket;
+    }
+
+    function setupHeroImage() {
+      if (!CONFIG.hero.image) return;
+
+      document.querySelector(".hero").style.setProperty(
+        "--hero-image",
+        `url("${CONFIG.hero.image}")`
+      );
+
+      const area = $("visualArea");
+      const img = document.createElement("img");
+      img.src = CONFIG.hero.image;
+      img.alt = CONFIG.hero.title;
+
+      img.onerror = () => {
+        area.innerHTML = `
+          <div class="visual-placeholder">
+            <div class="visual-symbol">${CONFIG.hero.symbol}</div>
+            <p>画像が見つかりません<br>${CONFIG.hero.image}</p>
+          </div>
+        `;
+      };
+
+      area.innerHTML = "";
+      area.appendChild(img);
+    }
+
+    function renderSpecs() {
+      const area = $("specList");
+      area.innerHTML = "";
+
+      CONFIG.specs.forEach(([label, value]) => {
+        const div = document.createElement("div");
+        div.className = "spec-line";
+        div.innerHTML = `
+          <dt>${label}</dt>
+          <dd>${value}</dd>
+        `;
+        area.appendChild(div);
+      });
+    }
+
+    function renderNews() {
+      const area = $("newsList");
+      area.innerHTML = "";
+
+      CONFIG.news.forEach((item) => {
+        const div = document.createElement("article");
+        div.className = "news-item";
+        div.innerHTML = `
+          <div class="news-date">${item.date}</div>
+          <div class="news-text">${item.text}</div>
+        `;
+        area.appendChild(div);
+      });
+    }
+
+    function renderStory() {
+      const area = $("storyText");
+      area.innerHTML = "";
+
+      CONFIG.story.forEach((text) => {
+        const p = document.createElement("p");
+        p.textContent = text;
+        area.appendChild(p);
+      });
+    }
+
+    function renderFeatures() {
+      const area = $("featureList");
+      area.innerHTML = "";
+
+      CONFIG.features.forEach((item, index) => {
+        const card = document.createElement("article");
+        card.className = "feature-card slide-card";
+        card.innerHTML = `
+          <div class="feature-num">POINT ${String(index + 1).padStart(2, "0")}</div>
+          <h3>${item.title}</h3>
+          <p>${item.text}</p>
+        `;
+        area.appendChild(card);
+      });
+    }
+
+    function renderHowto() {
+      const area = $("howList");
+      area.innerHTML = "";
+
+      CONFIG.howto.forEach((item) => {
+        const card = document.createElement("article");
+        card.className = "how-item";
+        card.innerHTML = `
+          <div class="how-num"></div>
+          <div>
+            <h3>${item.title}</h3>
+            <p>${item.text}</p>
+          </div>
+        `;
+        area.appendChild(card);
+      });
+    }
+
+    function renderTickets() {
+      const area = $("ticketList");
+      area.innerHTML = "";
+
+      CONFIG.tickets.forEach((ticket) => {
+        const card = document.createElement("article");
+        card.className = "ticket-card slide-card" + (ticket.recommend ? " recommend" : "");
+
+        const details = ticket.details.map((text) => `<li>${text}</li>`).join("");
+
+        card.innerHTML = `
+          ${ticket.recommend ? `<div class="ticket-label">おすすめ</div>` : ""}
+          <h3>${ticket.name}</h3>
+          <div class="ticket-price">${ticket.price}<small> / ${ticket.note}</small></div>
+          <a href="${CONFIG.links.ticket}" class="btn primary" target="_blank" rel="noopener">購入する</a>
+          <ul class="ticket-info">${details}</ul>
+        `;
+
+        area.appendChild(card);
+      });
+    }
+
+    function renderGameInfo() {
+      const table = $("gameInfoTable");
+      table.innerHTML = "";
+
+      CONFIG.gameInfo.forEach(([label, value]) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <th>${label}</th>
+          <td>${value}</td>
+        `;
+        table.appendChild(tr);
+      });
+    }
+
+    function renderNotices() {
+      const area = $("noticeList");
+      area.innerHTML = "";
+
+      CONFIG.notices.forEach((notice) => {
+        const details = document.createElement("details");
+        const items = notice.items.map((item) => `<li>${item}</li>`).join("");
+
+        details.innerHTML = `
+          <summary>${notice.title}</summary>
+          <div class="notice-body">
+            <ul>${items}</ul>
+          </div>
+        `;
+
+        area.appendChild(details);
+      });
+    }
+
+    function setupMenu() {
+      const button = $("menuButton");
+      const nav = $("nav");
+
+      button.addEventListener("click", () => {
+        document.body.classList.toggle("menu-open");
+      });
+
+      nav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          document.body.classList.remove("menu-open");
+        });
+      });
+    }
+
+    function setupSliderButtons() {
+      document.querySelectorAll("[data-slider-prev]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.sliderPrev;
+          const track = $(id);
+          track.scrollBy({
+            left: -track.clientWidth * 0.85,
+            behavior: "smooth"
+          });
+        });
+      });
+
+      document.querySelectorAll("[data-slider-next]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.sliderNext;
+          const track = $(id);
+          track.scrollBy({
+            left: track.clientWidth * 0.85,
+            behavior: "smooth"
+          });
+        });
+      });
+    }
+
+    function setupTopButton() {
+      const button = $("topButton");
+
+      window.addEventListener("scroll", () => {
+        button.classList.toggle("show", window.scrollY > 500);
+      });
+
+      button.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    }
+
+    function init() {
+      applyTheme();
+      setupBasic();
+      setupHeroImage();
+      renderSpecs();
+      renderNews();
+      renderStory();
+      renderFeatures();
+      renderHowto();
+      renderTickets();
+      renderGameInfo();
+      renderNotices();
+      setupMenu();
+      setupSliderButtons();
+      setupTopButton();
+    }
+
+    init();
+  </script>
+</body>
+</html>
