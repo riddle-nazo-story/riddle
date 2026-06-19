@@ -27,7 +27,7 @@ const EVENTS = [
   title: "AIが作ったゲームからの脱出",
   catch: "セレクトアンサーを攻略せよ。",
   image: "assets/escape-ai-game.jpg",
-  detailUrl: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45",
+  detailUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfF3OzzuDSdNOaHoqeAgxRqwiFM0eL29zyIlE8lfYZnF_uFZg/viewform?usp=header",
   api: null,
   rangeDates: [
     {
@@ -37,8 +37,8 @@ const EVENTS = [
         {
           startAt: "0:00",
           label: "オンライン版",
-          vacancyType: "NOT_SALE",
-          url: "https://sites.google.com/view/riddlestory-wait/er3buiv3g45"
+          vacancyType: "FEW_LEFT",
+          url: "https://docs.google.com/forms/d/e/1FAIpQLSfF3OzzuDSdNOaHoqeAgxRqwiFM0eL29zyIlE8lfYZnF_uFZg/viewform?usp=header"
         },
       ],
     },
