@@ -37,7 +37,7 @@ const EVENTS = [
         {
           startAt: "0:00",
           label: "オンライン",
-          vacancyType: "FEW_LEFT",
+          vacancyType: "SOLD_OUT",
           url: "https://docs.google.com/forms/d/e/1FAIpQLSfF3OzzuDSdNOaHoqeAgxRqwiFM0eL29zyIlE8lfYZnF_uFZg/viewform?usp=header"
         },
       ],
