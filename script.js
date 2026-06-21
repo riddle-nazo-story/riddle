@@ -5,7 +5,7 @@ const CONFIG = {
 
   // 問題画像はローカルファイルで管理するのが安定します。
   // 画像を差し替える時は assets/question.jpg を入れ替えるだけでOK。
-  questionImage: "assets/question-004.jpg",
+  questionImage: "assets/question-005.jpg",
   correctAnswer: "AI",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
@@ -23,6 +23,27 @@ const EVENTS = [
     manualDates: [],
     rangeDates: [],
   },
+    {
+  title: "答えは「謎解き」だ。",
+  catch: "ひらがなで入力しよう。",
+  image: "assets/escapegame.jpg",
+  detailUrl: "https://riddle-nazo-story.github.io/riddle/",
+  api: null,
+  rangeDates: [
+    {
+      start: "2026-06-27",
+      end: "2050-06-27",
+      slots: [
+        {
+          startAt: "0:00",
+          label: "オンライン",
+          vacancyType: "NOT_SALE",
+          url: "https://riddle-nazo-story.github.io/riddle/"
+        },
+      ],
+    },
+  ],
+},
   {
   title: "AIが作ったゲームからの脱出",
   catch: "セレクトアンサーを攻略せよ。",
