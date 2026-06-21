@@ -6,7 +6,7 @@ const CONFIG = {
   // 問題画像はローカルファイルで管理するのが安定します。
   // 画像を差し替える時は assets/question.jpg を入れ替えるだけでOK。
   questionImage: "assets/question-005.jpg",
-  correctAnswer: "AI",
+  correctAnswer: "謎解き",
   reportUrl: "https://x.gd/nivWm",
   maxVisibleSlots: 4,
   apiTimeoutMs: 10000,
