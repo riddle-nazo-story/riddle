@@ -32,7 +32,7 @@ const EVENTS = [
   rangeDates: [
     {
       start: "2026-06-27",
-      end: "2050-06-27",
+      end: "2026-06-27",
       slots: [
         {
           startAt: "0:00",
