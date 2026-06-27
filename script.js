@@ -48,7 +48,7 @@ const EVENTS = [
   title: "AIが作ったゲームからの脱出",
   catch: "セレクトアンサーを攻略せよ。",
   image: "assets/escape-ai-game.jpg",
-  detailUrl: "https://docs.google.com/forms/d/e/1FAIpQLSfF3OzzuDSdNOaHoqeAgxRqwiFM0eL29zyIlE8lfYZnF_uFZg/viewform?usp=header",
+  detailUrl: "https://riddle-nazo-story.github.io/member/ticket-event.html?eventId=select-answer",
   api: null,
   rangeDates: [
     {
@@ -58,8 +58,8 @@ const EVENTS = [
         {
           startAt: "0:00",
           label: "オンライン",
-          vacancyType: "SOLD_OUT",
-          url: "https://docs.google.com/forms/d/e/1FAIpQLSfF3OzzuDSdNOaHoqeAgxRqwiFM0eL29zyIlE8lfYZnF_uFZg/viewform?usp=header"
+          vacancyType: "ON_SALE",
+          url: "https://riddle-nazo-story.github.io/member/ticket-event.html?eventId=select-answer"
         },
       ],
     },
