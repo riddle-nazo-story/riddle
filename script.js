@@ -15,11 +15,11 @@ const CONFIG = {
 
 const EVENTS = [
   {
-    title: "テスト公演",
-    catch: "すべての謎を解け！　30min/40min",
-    image: "assets/test.jpg",
-    detailUrl: "https://example.com/hotel",
-    api: "https://pubapi.escape.id/e/MY3qtFqNrj5a/loc/U4Etz4rYhyNb/slots.json",
+    title: "セレクトワード",
+    catch: "候補は、無限────。　30min/40min",
+    image: "assets/select_word.jpg",
+    detailUrl: "https://escape.id/RIDDLESTORY-org/e-select_ward/",
+    api: "https://pubapi.escape.id/e/frQZMnViQeMY/loc/4GG2hvxdviIU/slots.json",
     manualDates: [],
     rangeDates: [],
   },
@@ -488,7 +488,22 @@ function weekdayLabel(dateObj) {
 }
 
 function getStatusMeta(vacancyType) {
-  switch (vacancyType) {
+  const type = String(vacancyType || "").toUpperCase();
+
+  switch (type) {
+    // ESCAPE.ID 公開APIの値
+    case "MANY":
+      return { label: "○", text: "販売中", className: "is-sale", clickable: true };
+    case "FEW":
+      return { label: "△", text: "残りわずか", className: "is-few", clickable: true };
+    case "FULL":
+      return { label: "×", text: "満席", className: "is-sold", clickable: false };
+    case "NOT_IN_SALES_PERIOD":
+      return { label: "―", text: "販売期間外", className: "is-closed", clickable: false };
+    case "NONE":
+      return { label: "―", text: "該当なし", className: "is-closed", clickable: false };
+
+    // 手動登録用にこれまで使っていた値もそのまま対応
     case "ON_SALE":
       return { label: "○", text: "販売中", className: "is-sale", clickable: true };
     case "FEW_LEFT":
@@ -497,7 +512,6 @@ function getStatusMeta(vacancyType) {
       return { label: "×", text: "満席", className: "is-sold", clickable: false };
     case "NOT_SALE":
       return { label: "-", text: "公演終了", className: "is-notsale", clickable: false };
-    case "NOT_IN_SALES_PERIOD":
     case "BEFORE_SALES_PERIOD":
     case "AFTER_SALES_PERIOD":
       return { label: "―", text: "受付外", className: "is-closed", clickable: false };
@@ -595,6 +609,71 @@ async function fetchWithTimeout(url, timeoutMs = CONFIG.apiTimeoutMs) {
   }
 }
 
+function fetchEscapeIdJsonp(url, timeoutMs = CONFIG.apiTimeoutMs) {
+  const jsonpUrl = String(url).replace(/\.json(\?.*)?$/, ".jsonp$1");
+
+  return new Promise((resolve, reject) => {
+    const callbackName = "escapeIdSlotsCallback";
+    const previousCallback = window[callbackName];
+    const script = document.createElement("script");
+    let settled = false;
+
+    const cleanup = () => {
+      clearTimeout(timer);
+      script.remove();
+
+      if (previousCallback) {
+        window[callbackName] = previousCallback;
+      } else {
+        try {
+          delete window[callbackName];
+        } catch (_) {
+          window[callbackName] = undefined;
+        }
+      }
+    };
+
+    const finish = (fn, value) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      fn(value);
+    };
+
+    const separator = jsonpUrl.includes("?") ? "&" : "?";
+    script.src = `${jsonpUrl}${separator}t=${Date.now()}`;
+    script.async = true;
+
+    window[callbackName] = (data) => finish(resolve, data);
+    script.onerror = () => finish(reject, new Error("JSONP読み込みに失敗しました"));
+
+    const timer = setTimeout(() => {
+      finish(reject, new Error("JSONPタイムアウト"));
+    }, timeoutMs);
+
+    document.head.appendChild(script);
+  });
+}
+
+async function fetchEscapeIdApi(url, timeoutMs = CONFIG.apiTimeoutMs) {
+  const apiUrl = String(url || "");
+
+  if (/\.jsonp(\?|$)/.test(apiUrl)) {
+    return await fetchEscapeIdJsonp(apiUrl, timeoutMs);
+  }
+
+  try {
+    return await fetchWithTimeout(apiUrl, timeoutMs);
+  } catch (error) {
+    // GitHub PagesなどでCORSに引っかかった場合は、ESCAPE.IDのJSONP APIへ自動切替。
+    if (/\.json(\?|$)/.test(apiUrl)) {
+      console.warn("JSON APIの取得に失敗したため、JSONPで再取得します:", error);
+      return await fetchEscapeIdJsonp(apiUrl, timeoutMs);
+    }
+    throw error;
+  }
+}
+
 async function fetchEventData(spec) {
   let apiDates = [];
   let apiOk = true;
@@ -602,7 +681,7 @@ async function fetchEventData(spec) {
 
   if (spec.api) {
     try {
-      const json = await fetchWithTimeout(spec.api);
+      const json = await fetchEscapeIdApi(spec.api);
       apiDates = normalizeApiDates(json);
     } catch (error) {
       apiOk = false;
@@ -1119,7 +1198,13 @@ async function loadAllData({ keepDate = false, manual = false } = {}) {
   if (els.ticketRefreshButton) els.ticketRefreshButton.disabled = true;
 
   try {
-    state.events = await Promise.all(EVENTS.map(fetchEventData));
+    // JSONPはコールバック名が固定なので、API取得は順番に行います。
+    // APIイベントが増えてもコールバックの競合を避けられます。
+    const fetchedEvents = [];
+    for (const eventSpec of EVENTS) {
+      fetchedEvents.push(await fetchEventData(eventSpec));
+    }
+    state.events = fetchedEvents;
 
     const rawDates = state.events.flatMap((event) => event.dates.map((d) => d.date));
     state.allDates = [...new Set(rawDates.filter((d) => d && d !== "常設"))].sort((a, b) => a.localeCompare(b));
