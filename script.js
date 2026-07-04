@@ -19,79 +19,79 @@ const EVENTS = [
     catch: "候補は、無限────。　30min/40min",
     image: "assets/select_word.jpg",
     detailUrl: "https://escape.id/RIDDLESTORY-org/e-select_ward/",
-    api: "https://pubapi.escape.id/e/frQZMnViQeMY/loc/4GG2hvxdviIU/slots.json",
+    api: "https://pubapi.escape.id/e/frQZMnViQeMY/loc/4GG2hvxdviIU/slots.jsonp",
     manualDates: [],
     rangeDates: [],
   },
-    {
-  title: "答えは「謎解き」だ。",
-  catch: "ひらがなで入力しよう。",
-  image: "assets/escapegame.jpg",
-  detailUrl: "https://riddle-nazo-story.github.io/riddle/",
-  api: null,
-  rangeDates: [
-    {
-      start: "2026-06-27",
-      end: "2026-06-27",
-      slots: [
-        {
-          startAt: "0:00",
-          label: "オンライン",
-          vacancyType: "NOT_SALE",
-          url: "https://riddle-nazo-story.github.io/riddle/"
-        },
-      ],
-    },
-  ],
-},
   {
-  title: "AIが作ったゲームからの脱出",
-  catch: "セレクトアンサーを攻略せよ。",
-  image: "assets/escape-ai-game.jpg",
-  detailUrl: "https://riddle-nazo-story.github.io/member/ticket-event.html?eventId=select-answer",
-  api: null,
-  rangeDates: [
-    {
-      start: "2026-06-20",
-      end: "2050-07-14",
-      slots: [
-        {
-          startAt: "0:00",
-          label: "オンライン",
-          vacancyType: "ON_SALE",
-          url: "https://riddle-nazo-story.github.io/member/ticket-event.html?eventId=select-answer"
-        },
-      ],
-    },
-  ],
-},
+    title: "答えは「謎解き」だ。",
+    catch: "ひらがなで入力しよう。",
+    image: "assets/escapegame.jpg",
+    detailUrl: "https://riddle-nazo-story.github.io/riddle/",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-06-27",
+        end: "2026-06-27",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "オンライン",
+            vacancyType: "NOT_SALE",
+            url: "https://riddle-nazo-story.github.io/riddle/",
+          },
+        ],
+      },
+    ],
+  },
   {
-  title: "とあるホテルの秘密",
-  catch: "ホテルに隠された、衝撃の真実に迫れ—。",
-  image: "assets/hotel.jpg",
-  detailUrl: "https://shop.daiyonkyokai.net/products/26030302?srsltid=AfmBOort5suGu_p4YT1jxlBUvmQoRywWc4zYJ0bB9Qm_Wv33BuevGOr_",
-  api: null,
-  rangeDates: [
-    {
-      start: "2026-02-07",
-      end: "2050-07-14",
-      slots: [
-        {
-          startAt: "0:00",
-          label: "オンライン",
-          vacancyType: "ON_SALE",
-          url: "https://riddle-nazo-story.github.io/4-start/"
-        },
-        {
-          startAt: "0:00",
-          label: "パッケージ版",
-          vacancyType: "ON_SALE",
-          url: "https://nazo-shop.booth.pm/items/7821674"
-        },
-      ],
-    },
-  ],
-},
+    title: "AIが作ったゲームからの脱出",
+    catch: "セレクトアンサーを攻略せよ。",
+    image: "assets/escape-ai-game.jpg",
+    detailUrl: "https://riddle-nazo-story.github.io/member/ticket-event.html?eventId=select-answer",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-06-20",
+        end: "2050-07-14",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "オンライン",
+            vacancyType: "ON_SALE",
+            url: "https://riddle-nazo-story.github.io/member/ticket-event.html?eventId=select-answer",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "とあるホテルの秘密",
+    catch: "ホテルに隠された、衝撃の真実に迫れ—。",
+    image: "assets/hotel.jpg",
+    detailUrl: "https://shop.daiyonkyokai.net/products/26030302?srsltid=AfmBOort5suGu_p4YT1jxlBUvmQoRywWc4zYJ0bB9Qm_Wv33BuevGOr_",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-02-07",
+        end: "2050-07-14",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "オンライン",
+            vacancyType: "ON_SALE",
+            url: "https://riddle-nazo-story.github.io/4-start/",
+          },
+          {
+            startAt: "0:00",
+            label: "パッケージ版",
+            vacancyType: "ON_SALE",
+            url: "https://nazo-shop.booth.pm/items/7821674",
+          },
+        ],
+      },
+    ],
+  },
   {
     title: "RIDDLE STORY 1",
     catch: "█████の願いを叶えよう。",
@@ -103,65 +103,69 @@ const EVENTS = [
         start: "2025-04-13",
         end: "2025-05-14",
         slots: [
-          { startAt: "0:00", vacancyType: "NOT_SALE", url: "https://nazo-shop.booth.pm/items/6993104" },
+          {
+            startAt: "0:00",
+            vacancyType: "NOT_SALE",
+            url: "https://nazo-shop.booth.pm/items/6993104",
+          },
         ],
       },
     ],
   },
-{
-  title: "【アーカイブ】RIDDLE STORY 2",
-  catch: "███を救いだせ！！",
-  image: "assets/riddlestory2.jpg",
-  detailUrl: "https://nazo-shop.booth.pm/items/7303330",
-  api: null,
-  rangeDates: [
-    {
-      start: "2025-07-15",
-      end: "2050-07-14",
-      slots: [
-        {
-          startAt: "0:00",
-          label: "紙版",
-          vacancyType: "SOLD_OUT",
-          url: "https://nazo-shop.booth.pm/items/7217781"
-        },
-        {
-          startAt: "0:00",
-          label: "電子版",
-          vacancyType: "ON_SALE",
-          url: "https://nazo-shop.booth.pm/items/7303330"
-        },
-      ],
-    },
-  ],
-},
   {
-  title: "【アーカイブ】RIDDLE STORY 1",
-  catch: "█████の願いを叶えよう。",
-  image: "assets/riddlestory1.jpg",
-  detailUrl: "https://nazo-shop.booth.pm/items/6993104",
-  api: null,
-  rangeDates: [
-    {
-      start: "2025-07-15",
-      end: "2050-07-14",
-      slots: [
-        {
-          startAt: "0:00",
-          label: "紙版",
-          vacancyType: "FEW_LEFT",
-          url: "https://nazo-shop.booth.pm/items/6993104"
-        },
-        {
-          startAt: "0:00",
-          label: "電子版",
-          vacancyType: "ON_SALE",
-          url: "https://nazo-shop.booth.pm/items/7059571"
-        },
-      ],
-    },
-  ],
-},
+    title: "【アーカイブ】RIDDLE STORY 2",
+    catch: "███を救いだせ！！",
+    image: "assets/riddlestory2.jpg",
+    detailUrl: "https://nazo-shop.booth.pm/items/7303330",
+    api: null,
+    rangeDates: [
+      {
+        start: "2025-07-15",
+        end: "2050-07-14",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "紙版",
+            vacancyType: "SOLD_OUT",
+            url: "https://nazo-shop.booth.pm/items/7217781",
+          },
+          {
+            startAt: "0:00",
+            label: "電子版",
+            vacancyType: "ON_SALE",
+            url: "https://nazo-shop.booth.pm/items/7303330",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "【アーカイブ】RIDDLE STORY 1",
+    catch: "█████の願いを叶えよう。",
+    image: "assets/riddlestory1.jpg",
+    detailUrl: "https://nazo-shop.booth.pm/items/6993104",
+    api: null,
+    rangeDates: [
+      {
+        start: "2025-07-15",
+        end: "2050-07-14",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "紙版",
+            vacancyType: "FEW_LEFT",
+            url: "https://nazo-shop.booth.pm/items/6993104",
+          },
+          {
+            startAt: "0:00",
+            label: "電子版",
+            vacancyType: "ON_SALE",
+            url: "https://nazo-shop.booth.pm/items/7059571",
+          },
+        ],
+      },
+    ],
+  },
   {
     title: "RIDDLE STORY 2",
     catch: "███を救いだせ！！",
@@ -173,7 +177,11 @@ const EVENTS = [
         start: "2025-06-23",
         end: "2025-07-14",
         slots: [
-          { startAt: "0:00", vacancyType: "NOT_SALE", url: "https://nazo-shop.booth.pm/items/7303330" },
+          {
+            startAt: "0:00",
+            vacancyType: "NOT_SALE",
+            url: "https://nazo-shop.booth.pm/items/7303330",
+          },
         ],
       },
     ],
@@ -225,7 +233,8 @@ const EVENTS = [
         slots: [
           { startAt: "20:50", endAt: "22:30", vacancyType: "NOT_SALE", url: "https://teket.jp/14570/55886" },
         ],
-      },{
+      },
+      {
         date: "2025-09-19",
         slots: [
           { startAt: "20:50", endAt: "22:30", vacancyType: "NOT_SALE", url: "https://teket.jp/14570/55886" },
@@ -326,7 +335,6 @@ const EVENTS = [
   },
 ];
 
-
 const GOODS = [
   {
     label: "おすすめ",
@@ -408,6 +416,7 @@ const state = {
   topicIndex: 0,
   topicTimer: null,
   goodsIndex: 0,
+  loadingTickets: false,
 };
 
 const els = {};
@@ -476,6 +485,7 @@ function getWeekDatesFromBase(baseWeekStart, offsetWeek) {
     d.setDate(start.getDate() + i);
     arr.push(d);
   }
+
   return arr;
 }
 
@@ -491,7 +501,7 @@ function getStatusMeta(vacancyType) {
   const type = String(vacancyType || "").toUpperCase();
 
   switch (type) {
-    // ESCAPE.ID 公開APIの値
+    // ESCAPE.ID 公開API
     case "MANY":
       return { label: "○", text: "販売中", className: "is-sale", clickable: true };
     case "FEW":
@@ -503,7 +513,7 @@ function getStatusMeta(vacancyType) {
     case "NONE":
       return { label: "―", text: "該当なし", className: "is-closed", clickable: false };
 
-    // 手動登録用にこれまで使っていた値もそのまま対応
+    // 手動登録用
     case "ON_SALE":
       return { label: "○", text: "販売中", className: "is-sale", clickable: true };
     case "FEW_LEFT":
@@ -515,6 +525,7 @@ function getStatusMeta(vacancyType) {
     case "BEFORE_SALES_PERIOD":
     case "AFTER_SALES_PERIOD":
       return { label: "―", text: "受付外", className: "is-closed", clickable: false };
+
     default:
       return { label: "・", text: "受付外", className: "is-closed", clickable: false };
   }
@@ -539,6 +550,7 @@ function normalizeApiDates(json) {
   ];
 
   const dates = candidates.find(Array.isArray) || [];
+
   return dates
     .map((d) => ({
       date: d.date ?? d.ymd ?? d.day ?? "",
@@ -572,9 +584,11 @@ function mergeDates(apiDates = [], manualDates = [], rangeDates = []) {
 
   const addDate = (dateObj) => {
     if (!dateObj?.date) return;
+
     if (!map.has(dateObj.date)) {
       map.set(dateObj.date, { date: dateObj.date, slots: [] });
     }
+
     const current = map.get(dateObj.date);
     current.slots.push(...(Array.isArray(dateObj.slots) ? dateObj.slots.map(normalizeSlot) : []));
   };
@@ -590,36 +604,21 @@ function mergeDates(apiDates = [], manualDates = [], rangeDates = []) {
   });
 }
 
-async function fetchWithTimeout(url, timeoutMs = CONFIG.apiTimeoutMs) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-
-  try {
-    const separator = url.includes("?") ? "&" : "?";
-    const res = await fetch(`${url}${separator}t=${Date.now()}`, {
-      cache: "no-store",
-      signal: controller.signal,
-      headers: { Accept: "application/json" },
-    });
-
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
 function fetchEscapeIdJsonp(url, timeoutMs = CONFIG.apiTimeoutMs) {
-  const jsonpUrl = String(url).replace(/\.json(\?.*)?$/, ".jsonp$1");
+  const jsonpUrl = String(url)
+    .replace(/slots\.json(\?.*)?$/, "slots.jsonp$1")
+    .replace(/slots\.jsonp\.jsonp(\?.*)?$/, "slots.jsonp$1");
 
   return new Promise((resolve, reject) => {
     const callbackName = "escapeIdSlotsCallback";
     const previousCallback = window[callbackName];
     const script = document.createElement("script");
+
     let settled = false;
+    let timer = null;
 
     const cleanup = () => {
-      clearTimeout(timer);
+      if (timer) clearTimeout(timer);
       script.remove();
 
       if (previousCallback) {
@@ -644,10 +643,15 @@ function fetchEscapeIdJsonp(url, timeoutMs = CONFIG.apiTimeoutMs) {
     script.src = `${jsonpUrl}${separator}t=${Date.now()}`;
     script.async = true;
 
-    window[callbackName] = (data) => finish(resolve, data);
-    script.onerror = () => finish(reject, new Error("JSONP読み込みに失敗しました"));
+    window[callbackName] = (data) => {
+      finish(resolve, data);
+    };
 
-    const timer = setTimeout(() => {
+    script.onerror = () => {
+      finish(reject, new Error("JSONP読み込みに失敗しました"));
+    };
+
+    timer = setTimeout(() => {
       finish(reject, new Error("JSONPタイムアウト"));
     }, timeoutMs);
 
@@ -655,22 +659,31 @@ function fetchEscapeIdJsonp(url, timeoutMs = CONFIG.apiTimeoutMs) {
   });
 }
 
-async function fetchEscapeIdApi(url, timeoutMs = CONFIG.apiTimeoutMs) {
+async function fetchWithTimeout(url, timeoutMs = CONFIG.apiTimeoutMs) {
   const apiUrl = String(url || "");
 
-  if (/\.jsonp(\?|$)/.test(apiUrl)) {
+  // ESCAPE.ID 公開APIはJSONPで取得する。
+  // GitHub PagesなどでもCORSに引っかかりにくい形。
+  if (apiUrl.includes("pubapi.escape.id") || apiUrl.includes("slots.jsonp")) {
     return await fetchEscapeIdJsonp(apiUrl, timeoutMs);
   }
 
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
   try {
-    return await fetchWithTimeout(apiUrl, timeoutMs);
-  } catch (error) {
-    // GitHub PagesなどでCORSに引っかかった場合は、ESCAPE.IDのJSONP APIへ自動切替。
-    if (/\.json(\?|$)/.test(apiUrl)) {
-      console.warn("JSON APIの取得に失敗したため、JSONPで再取得します:", error);
-      return await fetchEscapeIdJsonp(apiUrl, timeoutMs);
-    }
-    throw error;
+    const separator = apiUrl.includes("?") ? "&" : "?";
+    const res = await fetch(`${apiUrl}${separator}t=${Date.now()}`, {
+      cache: "no-store",
+      signal: controller.signal,
+      headers: { Accept: "application/json" },
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
   }
 }
 
@@ -681,7 +694,7 @@ async function fetchEventData(spec) {
 
   if (spec.api) {
     try {
-      const json = await fetchEscapeIdApi(spec.api);
+      const json = await fetchWithTimeout(spec.api);
       apiDates = normalizeApiDates(json);
     } catch (error) {
       apiOk = false;
@@ -700,18 +713,12 @@ function getTodayYmd() {
 
 function setSelectedDateFromTodayIfPossible() {
   const today = getTodayYmd();
-  const dateSet = new Set(state.allDates.filter((d) => d !== "常設"));
-
-  if (dateSet.has(today)) {
-    state.selectedDate = today;
-    return;
-  }
-
   state.selectedDate = today;
 }
 
 function renderDateStrip() {
   if (!els.dateStrip) return;
+
   els.dateStrip.innerHTML = "";
 
   const weekDates = getWeekDatesFromBase(state.baseWeekStart, state.weekOffset);
@@ -720,11 +727,13 @@ function renderDateStrip() {
   weekDates.forEach((dateObj) => {
     const ymd = toYmd(dateObj);
     const button = document.createElement("button");
+
     button.type = "button";
     button.className = "day-box";
     button.dataset.ymd = ymd;
 
     const day = dateObj.getDay();
+
     if (day === 6) button.classList.add("is-sat");
     if (day === 0) button.classList.add("is-sun");
     if (ymd === state.selectedDate) button.classList.add("is-active");
@@ -748,13 +757,16 @@ function renderDateStrip() {
 
 function renderDateDisplay() {
   if (!els.dateDisplay) return;
+
   const d = state.selectedDate;
+
   if (!d || d === "常設") {
     els.dateDisplay.textContent = "常設";
     return;
   }
 
   const dateObj = new Date(`${d}T00:00:00`);
+
   if (Number.isNaN(dateObj.getTime())) {
     els.dateDisplay.textContent = d;
     return;
@@ -765,22 +777,25 @@ function renderDateDisplay() {
 
 function formatTimePart(value) {
   if (!value) return "";
+
   if (/^\d{1,2}:\d{2}$/.test(value)) return value;
+
   const parts = String(value).split(" ");
+
   if (parts.length >= 2) return parts[1].slice(0, 5);
+
   return String(value).slice(0, 5);
 }
 
 function formatTimeLabel(slot) {
-  if (slot.label) {
-    return slot.label;
-  }
+  if (slot.label) return slot.label;
 
   const start = formatTimePart(slot.startAt);
   const end = formatTimePart(slot.endAt);
 
   if (!start && !end) return "随時";
   if (start && !end) return `${start}-`;
+
   return `${start} - ${end}`;
 }
 
@@ -796,6 +811,7 @@ function eventKey(event) {
 
 function renderTickets() {
   if (!els.ticketList) return;
+
   els.ticketList.innerHTML = "";
 
   const visibleEvents = state.events
@@ -827,7 +843,13 @@ function renderTickets() {
     poster.className = "ticket-card__poster";
     poster.src = event.image || "assets/placeholder.jpg";
     poster.alt = event.title;
-    poster.addEventListener("error", () => { poster.src = "assets/placeholder.jpg"; }, { once: true });
+    poster.addEventListener(
+      "error",
+      () => {
+        poster.src = "assets/placeholder.jpg";
+      },
+      { once: true }
+    );
 
     visual.appendChild(poster);
 
@@ -868,6 +890,7 @@ function renderTickets() {
 
     visibleSlots.forEach((slot) => {
       const status = getStatusMeta(slot.vacancyType);
+
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = `slot-box ${status.className}`;
@@ -885,8 +908,12 @@ function renderTickets() {
 
       btn.addEventListener("click", () => {
         if (!status.clickable) return;
+
         const url = slot.url || event.detailUrl;
-        if (url) window.open(url, "_blank", "noopener,noreferrer");
+
+        if (url) {
+          window.open(url, "_blank", "noopener,noreferrer");
+        }
       });
 
       slotGrid.appendChild(btn);
@@ -900,10 +927,12 @@ function renderTickets() {
         <div class="slot-box__mark">＋</div>
         <div class="slot-box__time">もっと見る</div>
       `;
+
       moreButton.addEventListener("click", () => {
         state.expandedEventKeys.add(eventKey(event));
         renderTickets();
       });
+
       slotGrid.appendChild(moreButton);
     } else if (event.slots.length > CONFIG.maxVisibleSlots && expanded) {
       const closeButton = document.createElement("button");
@@ -913,10 +942,12 @@ function renderTickets() {
         <div class="slot-box__mark">－</div>
         <div class="slot-box__time">閉じる</div>
       `;
+
       closeButton.addEventListener("click", () => {
         state.expandedEventKeys.delete(eventKey(event));
         renderTickets();
       });
+
       slotGrid.appendChild(closeButton);
     }
 
@@ -929,7 +960,9 @@ function renderTickets() {
 
 function renderGames() {
   if (!els.gameGrid) return;
+
   els.gameGrid.innerHTML = "";
+
   const template = document.getElementById("gameCardTemplate");
   if (!template) return;
 
@@ -949,7 +982,13 @@ function renderGames() {
 
     img.src = game.image || "assets/placeholder.jpg";
     img.alt = game.title;
-    img.addEventListener("error", () => { img.src = "assets/placeholder.jpg"; }, { once: true });
+    img.addEventListener(
+      "error",
+      () => {
+        img.src = "assets/placeholder.jpg";
+      },
+      { once: true }
+    );
 
     title.textContent = game.title;
     catchText.textContent = game.catch || "";
@@ -977,6 +1016,7 @@ function moveWeek(delta) {
 
 function setDrawer(open) {
   if (!els.drawer || !els.drawerBackdrop || !els.menuButton) return;
+
   els.drawer.classList.toggle("is-open", open);
   els.drawerBackdrop.classList.toggle("is-open", open);
   els.menuButton.setAttribute("aria-expanded", String(open));
@@ -991,6 +1031,7 @@ function initDrawer() {
   });
 
   els.drawerBackdrop.addEventListener("click", () => setDrawer(false));
+
   els.drawer.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", () => setDrawer(false));
   });
@@ -1005,6 +1046,7 @@ function initAnswerForm() {
 
   els.answerForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
     const value = els.answerInput.value.trim();
     const normalized = value.replace(/\s+/g, "").toLowerCase();
     const correct = String(CONFIG.correctAnswer).replace(/\s+/g, "").toLowerCase();
@@ -1016,7 +1058,11 @@ function initAnswerForm() {
 
     if (normalized === correct) {
       els.reportArea?.classList.add("is-visible");
-      if (els.reportLink) els.reportLink.href = CONFIG.reportUrl;
+
+      if (els.reportLink) {
+        els.reportLink.href = CONFIG.reportUrl;
+      }
+
       return;
     }
 
@@ -1027,14 +1073,19 @@ function initAnswerForm() {
 
 function initJump() {
   if (!els.questionJump) return;
+
   els.questionJump.addEventListener("click", () => {
-    document.getElementById("ticketSection")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("ticketSection")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   });
 }
 
 function initStaticLinks() {
   document.querySelectorAll("[data-url]").forEach((el) => {
     const url = el.getAttribute("data-url");
+
     el.addEventListener("click", (e) => {
       if (!url || url === "#") e.preventDefault();
     });
@@ -1042,6 +1093,7 @@ function initStaticLinks() {
 
   document.querySelectorAll("a[href]").forEach((link) => {
     const href = link.getAttribute("href") || "";
+
     if (href.startsWith("http")) {
       link.setAttribute("target", "_blank");
       link.setAttribute("rel", "noopener noreferrer");
@@ -1051,30 +1103,45 @@ function initStaticLinks() {
 
 function initQuestionImage() {
   if (!els.questionImage) return;
-  if (CONFIG.questionImage) els.questionImage.src = CONFIG.questionImage;
-  els.questionImage.addEventListener("error", () => {
-    els.questionImage.src = "assets/placeholder.jpg";
-  }, { once: true });
+
+  if (CONFIG.questionImage) {
+    els.questionImage.src = CONFIG.questionImage;
+  }
+
+  els.questionImage.addEventListener(
+    "error",
+    () => {
+      els.questionImage.src = "assets/placeholder.jpg";
+    },
+    { once: true }
+  );
 }
 
 function initTopicSlider() {
   if (!els.topicSlider) return;
 
   const links = [...els.topicSlider.querySelectorAll("a")];
+
   if (!links.length) return;
 
   links.forEach((link, index) => {
     link.classList.add("topic-slide-link");
+
     const img = link.querySelector(".slide") || link.querySelector("img");
+
     if (img) img.classList.toggle("active", index === 0);
+
     link.classList.toggle("is-active", index === 0);
   });
 
   function renderTopic() {
     links.forEach((link, index) => {
       const active = index === state.topicIndex;
+
       link.classList.toggle("is-active", active);
+
       const img = link.querySelector(".slide") || link.querySelector("img");
+
       if (img) img.classList.toggle("active", active);
     });
 
@@ -1089,7 +1156,10 @@ function initTopicSlider() {
   function showTopic(nextIndex, resetTimer = true) {
     state.topicIndex = (nextIndex + links.length) % links.length;
     renderTopic();
-    if (resetTimer) restartTopicTimer();
+
+    if (resetTimer) {
+      restartTopicTimer();
+    }
   }
 
   function restartTopicTimer() {
@@ -1099,6 +1169,7 @@ function initTopicSlider() {
 
   if (els.topicDots) {
     els.topicDots.innerHTML = "";
+
     links.forEach((_, index) => {
       const dot = document.createElement("button");
       dot.type = "button";
@@ -1116,7 +1187,6 @@ function initTopicSlider() {
   restartTopicTimer();
 }
 
-
 function initGoodsSlider() {
   if (!els.goodsSlider || !Array.isArray(GOODS) || GOODS.length === 0) return;
 
@@ -1125,6 +1195,7 @@ function initGoodsSlider() {
   GOODS.forEach((goods, index) => {
     const slide = document.createElement("article");
     slide.className = "goods-slide";
+
     if (index === 0) slide.classList.add("is-active");
 
     const safeUrl = goods.url || "#";
@@ -1147,15 +1218,21 @@ function initGoodsSlider() {
     `;
 
     const img = slide.querySelector("img");
-    img?.addEventListener("error", () => {
-      img.src = "assets/placeholder.jpg";
-    }, { once: true });
+
+    img?.addEventListener(
+      "error",
+      () => {
+        img.src = "assets/placeholder.jpg";
+      },
+      { once: true }
+    );
 
     els.goodsSlider.appendChild(slide);
   });
 
   function renderGoods(index) {
     const slides = [...els.goodsSlider.querySelectorAll(".goods-slide")];
+
     if (!slides.length) return;
 
     state.goodsIndex = (index + slides.length) % slides.length;
@@ -1172,6 +1249,7 @@ function initGoodsSlider() {
 
   if (els.goodsDots) {
     els.goodsDots.innerHTML = "";
+
     GOODS.forEach((_, index) => {
       const dot = document.createElement("button");
       dot.type = "button";
@@ -1191,19 +1269,26 @@ function initGoodsSlider() {
 async function loadAllData({ keepDate = false, manual = false } = {}) {
   if (!els.ticketStatus) return;
 
+  if (state.loadingTickets) return;
+  state.loadingTickets = true;
+
   const beforeSelectedDate = state.selectedDate;
   const beforeWeekOffset = state.weekOffset;
 
   els.ticketStatus.textContent = manual ? "チケット情報を再取得中..." : "最新情報を取得中...";
-  if (els.ticketRefreshButton) els.ticketRefreshButton.disabled = true;
+
+  if (els.ticketRefreshButton) {
+    els.ticketRefreshButton.disabled = true;
+  }
 
   try {
     // JSONPはコールバック名が固定なので、API取得は順番に行います。
-    // APIイベントが増えてもコールバックの競合を避けられます。
     const fetchedEvents = [];
+
     for (const eventSpec of EVENTS) {
       fetchedEvents.push(await fetchEventData(eventSpec));
     }
+
     state.events = fetchedEvents;
 
     const rawDates = state.events.flatMap((event) => event.dates.map((d) => d.date));
@@ -1224,6 +1309,7 @@ async function loadAllData({ keepDate = false, manual = false } = {}) {
     renderGames();
 
     const apiFailures = state.events.filter((event) => event.api && !event.apiOk);
+
     if (apiFailures.length) {
       els.ticketStatus.textContent = "一部APIの取得に失敗しました。手動設定分は表示しています。";
     } else {
@@ -1235,6 +1321,7 @@ async function loadAllData({ keepDate = false, manual = false } = {}) {
     }
 
     const firstApi = EVENTS.find((event) => event.api)?.api;
+
     if (els.ticketSource) {
       els.ticketSource.textContent = firstApi ? "公演情報API" : "公演情報";
       els.ticketSource.href = firstApi || "#";
@@ -1245,7 +1332,11 @@ async function loadAllData({ keepDate = false, manual = false } = {}) {
     console.error("チケット情報の更新に失敗:", error);
     els.ticketStatus.textContent = "チケット情報の更新に失敗しました。時間をおいて再度お試しください。";
   } finally {
-    if (els.ticketRefreshButton) els.ticketRefreshButton.disabled = false;
+    if (els.ticketRefreshButton) {
+      els.ticketRefreshButton.disabled = false;
+    }
+
+    state.loadingTickets = false;
   }
 }
 
@@ -1265,5 +1356,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   els.ticketRefreshButton?.addEventListener("click", () => loadAllData({ keepDate: true, manual: true }));
 
   await loadAllData();
+
   setInterval(() => loadAllData({ keepDate: true }), CONFIG.apiRefreshMs);
 });
