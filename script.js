@@ -16,9 +16,9 @@ const CONFIG = {
 const EVENTS = [
   {
     title: "セレクトワード",
-    catch: "候補は、無限────。　30min/40min",
+    catch: "候補は、無限───。",
     image: "assets/select_word.jpg",
-    detailUrl: "https://escape.id/RIDDLESTORY-org/e-select_ward/",
+    detailUrl: "https://riddle-nazo-story.github.io/riddle/select_word.html",
     api: "https://pubapi.escape.id/e/frQZMnViQeMY/loc/4GG2hvxdviIU/slots.jsonp",
     manualDates: [],
     rangeDates: [],
