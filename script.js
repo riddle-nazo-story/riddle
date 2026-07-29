@@ -29,7 +29,7 @@ const EVENTS = [
     title: "答えは「謎解き」だ。",
     catch: "ひらがなで入力しよう。",
     image: "assets/escapegame.jpg",
-    detailUrl: "https://riddle-nazo-story.github.io/riddle/",
+    detailUrl: "https://riddlestory.jp/select_word.html",
     api: null,
     rangeDates: [
       {
@@ -40,7 +40,7 @@ const EVENTS = [
             startAt: "0:00",
             label: "オンライン",
             vacancyType: "NOT_SALE",
-            url: "https://riddle-nazo-story.github.io/riddle/",
+            url: "https://riddlestory.jp/select_word.html",
           },
         ],
       },
@@ -379,7 +379,7 @@ const GAMES = [
     badge: "随時スタート",
     subBadge: "15分～",
     image: "assets/escape-ai-game.jpg",
-    url: "https://member.riddlestory.jp/ticket-event.html?eventId=select-answer",
+    url: "https://riddlestory.jp/select_word.html",
   },
   {
     title: "とあるホテルの秘密",
