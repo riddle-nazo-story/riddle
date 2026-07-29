@@ -1107,16 +1107,6 @@ function setFieldGroupEnabled(container, enabled) {
 function initContactForm() {
   if (!els.contactForm) return;
 
-  // EVENT配列をそのままプルダウンに反映します。
-  if (els.eventSelect) {
-    [...new Set(EVENTS.map((event) => event.title).filter(Boolean))].forEach((title) => {
-      const option = document.createElement("option");
-      option.value = title;
-      option.textContent = title;
-      els.eventSelect.appendChild(option);
-    });
-  }
-
   const updateCategory = () => {
     const category = document.querySelector('input[name="contactCategory"]:checked')?.value || "";
     const hasSelection = category === "general" || category === "business";
