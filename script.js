@@ -11,6 +11,8 @@ const CONFIG = {
   maxVisibleSlots: 4,
   apiTimeoutMs: 10000,
   topicAutoMs: 5000,
+  // Google Apps Scriptをウェブアプリとして公開し、そのURLを設定してください。
+  contactEndpoint: "https://script.google.com/macros/s/AKfycbxOWzSpSx0IPxHoEBmlOyUDVTJWXcRNESYZBU_ADh-_1viJOFeygoweHQKBNcU-XQxa/exec",
 };
 
 const EVENTS = [
@@ -416,6 +418,7 @@ const state = {
   topicIndex: 0,
   topicTimer: null,
   goodsIndex: 0,
+  gameIndex: 0,
   loadingTickets: false,
 };
 
@@ -442,6 +445,9 @@ function cacheElements() {
     ticketSource: document.getElementById("ticketSource"),
     ticketRefreshButton: document.getElementById("ticketRefreshButton"),
     gameGrid: document.getElementById("gameGrid"),
+    gamePrev: document.getElementById("gamePrev"),
+    gameNext: document.getElementById("gameNext"),
+    gameDots: document.getElementById("gameDots"),
     topicSlider: document.getElementById("topicSlider") || document.querySelector(".slider"),
     topicPrev: document.getElementById("topicPrev"),
     topicNext: document.getElementById("topicNext"),
@@ -450,6 +456,16 @@ function cacheElements() {
     goodsPrev: document.getElementById("goodsPrev"),
     goodsNext: document.getElementById("goodsNext"),
     goodsDots: document.getElementById("goodsDots"),
+    contactForm: document.getElementById("contactForm"),
+    contactStatus: document.getElementById("contactStatus"),
+    contactSubmit: document.getElementById("contactSubmit"),
+    generalFields: document.getElementById("generalFields"),
+    businessFields: document.getElementById("businessFields"),
+    eventSelect: document.getElementById("eventSelect"),
+    eventWrite: document.getElementById("eventWrite"),
+    inquiryType: document.getElementById("inquiryType"),
+    otherInquiryField: document.getElementById("otherInquiryField"),
+    otherInquiry: document.getElementById("otherInquiry"),
   });
 }
 
@@ -958,15 +974,22 @@ function renderTickets() {
   }
 }
 
+function getGameCardsPerView() {
+  if (window.matchMedia("(max-width: 720px)").matches) return 1;
+  if (window.matchMedia("(max-width: 1020px)").matches) return 2;
+  return 3;
+}
+
 function renderGames() {
   if (!els.gameGrid) return;
 
   els.gameGrid.innerHTML = "";
+  if (els.gameDots) els.gameDots.innerHTML = "";
 
   const template = document.getElementById("gameCardTemplate");
-  if (!template) return;
+  if (!template || !Array.isArray(GAMES) || GAMES.length === 0) return;
 
-  GAMES.forEach((game) => {
+  GAMES.forEach((game, index) => {
     const node = template.content.cloneNode(true);
     const link = node.querySelector(".game-card");
     const img = node.querySelector(".game-card__thumb");
@@ -975,28 +998,203 @@ function renderGames() {
     const badge = node.querySelector(".game-card__badge");
     const subBadge = node.querySelector(".game-card__badge--sub");
 
+    link.dataset.gameIndex = String(index);
     link.href = game.url || "#";
-    link.addEventListener("click", (e) => {
-      if (!game.url || game.url === "#") e.preventDefault();
+    link.addEventListener("click", (event) => {
+      if (!game.url || game.url === "#") event.preventDefault();
     });
 
     img.src = game.image || "assets/placeholder.jpg";
     img.alt = game.title;
-    img.addEventListener(
-      "error",
-      () => {
-        img.src = "assets/placeholder.jpg";
-      },
-      { once: true }
-    );
+    img.addEventListener("error", () => { img.src = "assets/placeholder.jpg"; }, { once: true });
 
     title.textContent = game.title;
     catchText.textContent = game.catch || "";
     badge.textContent = game.badge || "";
     subBadge.textContent = game.subBadge || "";
-
     els.gameGrid.appendChild(node);
   });
+
+  const cards = [...els.gameGrid.querySelectorAll(".game-card")];
+
+  const showGames = (nextIndex, direction = 1) => {
+    const cardsPerView = Math.min(getGameCardsPerView(), cards.length);
+    state.gameIndex = (nextIndex + cards.length) % cards.length;
+    els.gameGrid.style.setProperty("--cards-per-view", String(cardsPerView));
+
+    cards.forEach((card) => {
+      card.classList.remove("is-visible", "is-entering-left", "is-entering-right");
+      card.hidden = true;
+      card.setAttribute("aria-hidden", "true");
+      card.tabIndex = -1;
+    });
+
+    for (let offset = 0; offset < cardsPerView; offset += 1) {
+      const index = (state.gameIndex + offset) % cards.length;
+      const card = cards[index];
+      card.hidden = false;
+      card.classList.add("is-visible", direction >= 0 ? "is-entering-right" : "is-entering-left");
+      card.setAttribute("aria-hidden", "false");
+      card.tabIndex = 0;
+      requestAnimationFrame(() => card.classList.remove("is-entering-left", "is-entering-right"));
+    }
+
+    if (els.gameDots) {
+      els.gameDots.innerHTML = "";
+      cards.forEach((_, index) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "event-carousel__dot";
+        dot.classList.toggle("is-active", index === state.gameIndex);
+        dot.setAttribute("aria-label", `${index + 1}番目のイベントから表示`);
+        dot.setAttribute("aria-current", index === state.gameIndex ? "true" : "false");
+        dot.addEventListener("click", () => showGames(index, index >= state.gameIndex ? 1 : -1));
+        els.gameDots.appendChild(dot);
+      });
+    }
+  };
+
+  els.gamePrev?.addEventListener("click", () => showGames(state.gameIndex - 1, -1));
+  els.gameNext?.addEventListener("click", () => showGames(state.gameIndex + 1, 1));
+
+  let touchStartX = null;
+  els.gameGrid.addEventListener("touchstart", (event) => {
+    touchStartX = event.changedTouches[0]?.clientX ?? null;
+  }, { passive: true });
+  els.gameGrid.addEventListener("touchend", (event) => {
+    if (touchStartX == null) return;
+    const endX = event.changedTouches[0]?.clientX ?? touchStartX;
+    const diff = endX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(diff) < 45) return;
+    showGames(state.gameIndex + (diff < 0 ? 1 : -1), diff < 0 ? 1 : -1);
+  }, { passive: true });
+
+  let resizeTimer;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => showGames(state.gameIndex, 1), 120);
+  });
+
+  state.gameIndex = Math.min(state.gameIndex, GAMES.length - 1);
+  showGames(state.gameIndex, 1);
+}
+
+function setFieldGroupEnabled(container, enabled) {
+  if (!container) return;
+  container.hidden = !enabled;
+  container.querySelectorAll("input, select, textarea").forEach((field) => {
+    field.disabled = !enabled;
+  });
+}
+
+function initContactForm() {
+  if (!els.contactForm) return;
+
+  // EVENT配列をそのままプルダウンに反映します。
+  if (els.eventSelect) {
+    [...new Set(EVENTS.map((event) => event.title).filter(Boolean))].forEach((title) => {
+      const option = document.createElement("option");
+      option.value = title;
+      option.textContent = title;
+      els.eventSelect.appendChild(option);
+    });
+  }
+
+  const updateCategory = () => {
+    const category = document.querySelector('input[name="contactCategory"]:checked')?.value || "";
+    const hasSelection = category === "general" || category === "business";
+    const isGeneral = category === "general";
+    const isBusiness = category === "business";
+
+    els.contactForm.hidden = !hasSelection;
+    setFieldGroupEnabled(els.generalFields, isGeneral);
+    setFieldGroupEnabled(els.businessFields, isBusiness);
+
+    // 選択された区分の質問だけを必須・入力可能にします。
+    els.generalFields?.querySelector('[name="name"]')?.toggleAttribute("required", isGeneral);
+    els.generalFields?.querySelector('[name="email"]')?.toggleAttribute("required", isGeneral);
+    els.generalFields?.querySelector('[name="message"]')?.toggleAttribute("required", isGeneral);
+    els.businessFields?.querySelector('[name="organization"]')?.toggleAttribute("required", isBusiness);
+    els.businessFields?.querySelector('[name="businessEmail"]')?.toggleAttribute("required", isBusiness);
+    els.inquiryType?.toggleAttribute("required", isBusiness);
+  };
+
+  document.querySelectorAll('input[name="contactCategory"]').forEach((radio) => {
+    radio.addEventListener("change", updateCategory);
+  });
+
+  document.querySelectorAll('input[name="eventInputMode"]').forEach((radio) => {
+    radio.addEventListener("change", () => {
+      const useWrite = document.querySelector('input[name="eventInputMode"]:checked')?.value === "write";
+      if (els.eventSelect) {
+        els.eventSelect.hidden = useWrite;
+        els.eventSelect.disabled = useWrite;
+      }
+      if (els.eventWrite) {
+        els.eventWrite.hidden = !useWrite;
+        els.eventWrite.disabled = !useWrite;
+      }
+    });
+  });
+
+  els.inquiryType?.addEventListener("change", () => {
+    const showOther = els.inquiryType.value === "その他";
+    if (els.otherInquiryField) els.otherInquiryField.hidden = !showOther;
+    if (els.otherInquiry) {
+      els.otherInquiry.disabled = !showOther;
+      els.otherInquiry.required = showOther;
+    }
+  });
+
+  els.contactForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!els.contactForm.reportValidity()) return;
+
+    if (!CONFIG.contactEndpoint) {
+      els.contactStatus.textContent = "送信先が未設定です。script.jsのcontactEndpointにApps ScriptのURLを設定してください。";
+      els.contactStatus.className = "contact-status is-error";
+      return;
+    }
+
+    const formData = new FormData(els.contactForm);
+    const category = document.querySelector('input[name="contactCategory"]:checked')?.value || "";
+    if (!category) return;
+    formData.set("category", category);
+    formData.set("categoryLabel", category === "general" ? "一般" : "団体・企業");
+    formData.set("eventName", formData.get("eventWrite") || formData.get("eventSelect") || "");
+    formData.set("submittedAt", new Date().toLocaleString("ja-JP"));
+    formData.set("pageUrl", location.href);
+
+    els.contactSubmit.disabled = true;
+    els.contactStatus.textContent = "送信中です…";
+    els.contactStatus.className = "contact-status";
+
+    try {
+      const response = await fetch(CONFIG.contactEndpoint, {
+        method: "POST",
+        body: new URLSearchParams([...formData.entries()]),
+      });
+      const result = await response.json().catch(() => ({ ok: response.ok }));
+      if (!response.ok || result.ok === false) throw new Error(result.message || "送信に失敗しました");
+
+      els.contactForm.reset();
+      updateCategory();
+      if (els.eventSelect) { els.eventSelect.hidden = false; els.eventSelect.disabled = false; }
+      if (els.eventWrite) { els.eventWrite.hidden = true; els.eventWrite.disabled = true; }
+      if (els.otherInquiryField) els.otherInquiryField.hidden = true;
+      els.contactStatus.textContent = "お問い合わせを送信しました。ありがとうございます。";
+      els.contactStatus.className = "contact-status is-success";
+    } catch (error) {
+      console.error("お問い合わせ送信エラー:", error);
+      els.contactStatus.textContent = "送信できませんでした。時間をおいてもう一度お試しください。";
+      els.contactStatus.className = "contact-status is-error";
+    } finally {
+      els.contactSubmit.disabled = false;
+    }
+  });
+
+  updateCategory();
 }
 
 function moveWeek(delta) {
@@ -1350,6 +1548,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   initStaticLinks();
   initTopicSlider();
   initGoodsSlider();
+  initContactForm();
 
   els.prevWeek?.addEventListener("click", () => moveWeek(-1));
   els.nextWeek?.addEventListener("click", () => moveWeek(1));
