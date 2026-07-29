@@ -366,11 +366,27 @@ const GOODS = [
 
 const GAMES = [
   {
+    title: "セレクトワード",
+    catch: "候補は、無限───。",
+    badge: "一斉スタート",
+    subBadge: "25分",
+    image: "assets/select_word.jpg",
+    url: "https://member.riddlestory.jp/ticket-event.html?eventId=select-answer",
+  },
+  {
+    title: "AIが作ったゲームからの脱出",
+    catch: "セレクトアンサーを攻略せよ！",
+    badge: "随時スタート",
+    subBadge: "15分～",
+    image: "assets/escape-ai-game.jpg",
+    url: "https://member.riddlestory.jp/ticket-event.html?eventId=select-answer",
+  },
+  {
     title: "とあるホテルの秘密",
     catch: "ホテルに隠された、衝撃の真実に迫れ—。",
     badge: "随時スタート",
     subBadge: "4~5時間",
-    image: "assets/hotel-1.jpg",
+    image: "assets/hotel.jpg",
     url: "https://riddle-nazo-story.github.io/4-start/",
   },
   {
@@ -378,7 +394,7 @@ const GAMES = [
     catch: "延長料金は1,000万円！？画像は前のものです。",
     badge: "一斉スタート",
     subBadge: "20分",
-    image: "assets/meeting-1.jpg",
+    image: "assets/meeting.jpg",
     url: "https://riddle-nazo-story.github.io/riddle-mini-1/",
   },
   {
@@ -386,7 +402,7 @@ const GAMES = [
     catch: "転落事故の真犯人を見つけ出せ！",
     badge: "一斉スタート",
     subBadge: "90分~",
-    image: "assets/tenraku-1.jpg",
+    image: "assets/tenraku.jpg",
     url: "https://tenraku-escape.jimdofree.com/",
   },
   {
@@ -394,7 +410,7 @@ const GAMES = [
     catch: "███を救い出せ！！",
     badge: "一斉スタート",
     subBadge: "アーカイブあり",
-    image: "assets/riddlestory2-1.jpg",
+    image: "assets/riddlestory2.jpg",
     url: "https://nazo-shop.booth.pm/items/7303330",
   },
   {
@@ -402,7 +418,7 @@ const GAMES = [
     catch: "█████の願いを叶えよう。",
     badge: "一斉スタート",
     subBadge: "アーカイブあり",
-    image: "assets/riddlestory1-1.jpg",
+    image: "assets/riddlestory1.jpg",
     url: "https://booth.pm/ja/items/6993104",
   },
 ];
@@ -1138,14 +1154,24 @@ function initContactForm() {
     });
   });
 
-  els.inquiryType?.addEventListener("change", () => {
-    const showOther = els.inquiryType.value === "その他";
-    if (els.otherInquiryField) els.otherInquiryField.hidden = !showOther;
-    if (els.otherInquiry) {
-      els.otherInquiry.disabled = !showOther;
-      els.otherInquiry.required = showOther;
+  const updateOtherInquiry = () => {
+  const showOther = els.inquiryType?.value === "その他";
+
+  if (els.otherInquiryField) {
+    els.otherInquiryField.hidden = !showOther;
+  }
+
+  if (els.otherInquiry) {
+    els.otherInquiry.disabled = !showOther;
+    els.otherInquiry.required = showOther;
+
+    if (!showOther) {
+      els.otherInquiry.value = "";
     }
-  });
+  }
+};
+
+els.inquiryType?.addEventListener("change", updateOtherInquiry);
 
   els.contactForm.addEventListener("submit", async (event) => {
     event.preventDefault();
