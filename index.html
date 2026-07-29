@@ -27,7 +27,8 @@
     <a href="#news">NEWS <span>〉</span></a>
     <a href="#ticketSection">TICKET <span>〉</span></a>
     <a href="#questionSection">今週の一問 <span>〉</span></a>
-    <a href="#allGameSection">ALL GAME <span>〉</span></a>
+    <a href="#allGameSection">ALL EVENT <span>〉</span></a>
+    <a href="#contactSection">CONTACT <span>〉</span></a>
     <a href="#aboutSection">ABOUT <span>〉</span></a>
     <a href="#goodsSection">GOODS <span>〉</span></a>
   </nav>
@@ -85,6 +86,18 @@
     </a>
 
   </div>
+</section>
+
+<section id="memberSection" class="section member-section" aria-labelledby="memberTitle">
+  <a class="member-card" href="https://member.riddlestory.jp/index.html" target="_blank" rel="noopener noreferrer">
+    <div class="member-card__mark" aria-hidden="true">RS</div>
+    <div class="member-card__body">
+      <p class="member-card__eyebrow">MEMBERSHIP SITE</p>
+      <h2 id="memberTitle" class="member-card__title">RIDDLE STORY MEMBER</h2>
+      <p class="member-card__text">会員限定コンテンツや対象イベントへアクセスできます。</p>
+    </div>
+    <span class="member-card__arrow" aria-hidden="true">→</span>
+  </a>
 </section>
 
     <!-- チケット -->
@@ -148,8 +161,14 @@
 
     <!-- ALL GAME -->
     <section id="allGameSection" class="section allgame">
-      <h2 class="section-title">ALL GAME</h2>
-      <div id="gameGrid" class="game-grid"></div>
+      <h2 class="section-title">ALL EVENT</h2>
+      <p class="allgame__guide">左右の矢印でカードをめくって、気になるイベントをチェック！</p>
+      <div class="event-carousel" aria-label="イベント一覧">
+        <button id="gamePrev" class="event-carousel__arrow event-carousel__arrow--prev" type="button" aria-label="前のイベントを見る">‹</button>
+        <div id="gameGrid" class="game-grid" aria-live="polite"></div>
+        <button id="gameNext" class="event-carousel__arrow event-carousel__arrow--next" type="button" aria-label="次のイベントを見る">›</button>
+      </div>
+      <div id="gameDots" class="event-carousel__dots" aria-label="イベント切り替え"></div>
     </section>
 
     <!-- ABOUT -->
@@ -189,6 +208,102 @@
       </div>
     </section>
 
+
+
+    <!-- CONTACT -->
+    <section id="contactSection" class="section contact-section">
+      <h2 class="section-title">CONTACT</h2>
+      <div class="contact-panel">
+        <p class="contact-panel__lead">お問い合わせの種類を選択してください。</p>
+
+        <div class="contact-type" role="radiogroup" aria-label="お問い合わせ区分">
+          <label class="contact-type__option">
+            <input type="radio" name="contactCategory" value="general" />
+            <span>一般の方</span>
+          </label>
+          <label class="contact-type__option">
+            <input type="radio" name="contactCategory" value="business" />
+            <span>団体・企業の方</span>
+          </label>
+        </div>
+
+        <form id="contactForm" class="contact-form" hidden>
+          <input class="contact-honeypot" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+          <div id="generalFields" class="contact-fields" hidden>
+            <div class="contact-fields__heading">
+              <strong>一般の方向けお問い合わせ</strong>
+              <span>参加したイベントやサービスについてお問い合わせいただけます。</span>
+            </div>
+            <label class="form-field">
+              <span>名前 <b>必須</b></span>
+              <input type="text" name="name" autocomplete="name" required />
+            </label>
+            <label class="form-field">
+              <span>メールアドレス <b>必須</b></span>
+              <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <div class="form-field">
+              <span>謎解きイベント <small>任意</small></span>
+              <div class="event-input-mode">
+                <label><input type="radio" name="eventInputMode" value="select" checked /> 一覧から選択</label>
+                <label><input type="radio" name="eventInputMode" value="write" /> 自分で記入</label>
+              </div>
+              <select id="eventSelect" name="eventSelect">
+                <option value="">選択してください</option>
+              </select>
+              <input id="eventWrite" type="text" name="eventWrite" placeholder="イベント名を入力" hidden disabled />
+            </div>
+            <label class="form-field">
+              <span>お問い合わせ内容 <b>必須</b></span>
+              <textarea name="message" rows="7" required></textarea>
+            </label>
+          </div>
+
+          <div id="businessFields" class="contact-fields" hidden>
+            <div class="contact-fields__heading">
+              <strong>団体・企業の方向けお問い合わせ</strong>
+              <span>謎制作・グッズ制作・取材などのご相談はこちらからお送りください。</span>
+            </div>
+            <label class="form-field">
+              <span>団体・企業名 <b>必須</b></span>
+              <input type="text" name="organization" autocomplete="organization" disabled />
+            </label>
+            <label class="form-field">
+              <span>メールアドレス <b>必須</b></span>
+              <input type="email" name="businessEmail" autocomplete="email" disabled />
+            </label>
+            <label class="form-field">
+              <span>何に関するお問い合わせですか？ <b>必須</b></span>
+              <select id="inquiryType" name="inquiryType" disabled>
+                <option value="">選択してください</option>
+                <option value="謎制作">謎制作</option>
+                <option value="グッズ制作">グッズ制作</option>
+                <option value="取材に関する">取材に関する</option>
+                <option value="その他">その他</option>
+              </select>
+            </label>
+            <label id="otherInquiryField" class="form-field" hidden>
+              <span>その他の内容 <b>必須</b></span>
+              <input id="otherInquiry" type="text" name="otherInquiry" disabled />
+            </label>
+            <label class="form-field">
+              <span>予算 <small>任意</small></span>
+              <input type="text" name="budget" placeholder="例：10万円程度、相談希望" disabled />
+            </label>
+            <label class="form-field">
+              <span>お問い合わせ内容 <small>任意</small></span>
+              <textarea name="businessMessage" rows="7" disabled></textarea>
+            </label>
+          </div>
+
+          <p class="contact-form__note">送信内容は、お問い合わせ対応のために利用します。</p>
+          <button id="contactSubmit" class="contact-submit" type="submit">送信する</button>
+          <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
     <!-- テンプレ -->
     <template id="gameCardTemplate">
       <a class="game-card" href="#" target="_blank" rel="noopener noreferrer">
@@ -199,7 +314,7 @@
           <div class="game-card__meta">
             <span class="game-card__badge"></span>
             <span class="game-card__badge game-card__badge--sub"></span>
-            <span class="game-card__more">詳細はこちら</span>
+            <span class="game-card__more">タップして詳細を見る →</span>
           </div>
         </div>
       </a>
