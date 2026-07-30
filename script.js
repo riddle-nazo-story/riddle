@@ -366,6 +366,14 @@ const GOODS = [
 
 const GAMES = [
   {
+    title: "ある少女に隠された秘密",
+    catch: "彼女のすべてを、あなたは知っていますか？",
+    badge: "随時スタート",
+    subBadge: "10～30分",
+    image: "assets/arg-shoujo.jpg",
+    url: "https://member.riddlestory.jp/ticket-event.html?eventId=shoujo-secret",
+  },
+  {
     title: "セレクトワード",
     catch: "候補は、無限───。",
     badge: "一斉スタート",
