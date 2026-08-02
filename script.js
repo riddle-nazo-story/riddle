@@ -412,7 +412,7 @@ const GAMES = [
     catch: "グッズ購入者・イベント参加者限定謎解き",
     badge: "随時スタート",
     subBadge: "10～30分",
-    image: "assets/hisakityousenjo.png",
+    image: "assets/hisaki-tyousenjo.png",
     url: "https://x.com/riddle_story/status/2083891056366788950",
   },
   {
