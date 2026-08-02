@@ -17,6 +17,48 @@ const CONFIG = {
 
 const EVENTS = [
   {
+    title: "ひさきからの高難易度謎解き",
+    catch: "グッズ購入者・イベント参加者限定謎解き",
+    image: "assets/hisaki-tyousenjo.png",
+    detailUrl: "https://x.com/riddle_story/status/2083891056366788950",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-08-01",
+        end: "2050-08-01",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "オンライン",
+            vacancyType: "ON_SALE",
+            url: "https://x.com/riddle_story/status/2083891056366788950",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "ある少女に隠された秘密",
+    catch: "彼女のすべてを、あなたは知っていますか？",
+    image: "assets/arg-shoujo.jpg",
+    detailUrl: "https://member.riddlestory.jp/ticket-event.html?eventId=shoujo-secret",
+    api: null,
+    rangeDates: [
+      {
+        start: "2026-09-01",
+        end: "2050-07-14",
+        slots: [
+          {
+            startAt: "0:00",
+            label: "オンライン",
+            vacancyType: "BEFORE_SALES_PERIOD",
+            url: "https://member.riddlestory.jp/ticket-event.html?eventId=shoujo-secret",
+          },
+        ],
+      },
+    ],
+  },
+  {
     title: "セレクトワード",
     catch: "候補は、無限───。",
     image: "assets/select_word.jpg",
@@ -365,6 +407,14 @@ const GOODS = [
 ];
 
 const GAMES = [
+  {
+    title: "ひさきからの高難易度謎解き",
+    catch: "グッズ購入者・イベント参加者限定謎解き",
+    badge: "随時スタート",
+    subBadge: "10～30分",
+    image: "assets/hisakityousenjo.png",
+    url: "https://x.com/riddle_story/status/2083891056366788950",
+  },
   {
     title: "ある少女に隠された秘密",
     catch: "彼女のすべてを、あなたは知っていますか？",
