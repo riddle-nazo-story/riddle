@@ -31,7 +31,7 @@ const EVENTS = [
         slots: [
           {
             startAt: "0:00",
-            label: "オンライン",
+            label: "キット通販型",
             vacancyType: "ON_SALE",
             url: "https://x.com/riddle_story/status/2083891056366788950",
           },
