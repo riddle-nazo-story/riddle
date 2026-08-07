@@ -5,9 +5,11 @@ const CONFIG = {
 
   // 問題画像はローカルファイルで管理するのが安定します。
   // 画像を差し替える時は assets/question.jpg を入れ替えるだけでOK。
-  questionImage: "assets/question-008.jpg",
-  correctAnswer: "ward",
+  questionImage: "assets/question-009.jpg",
+  correctAnswer: "ものもらい",
   reportUrl: "https://x.gd/nivWm",
+  // 正解後に表示する「スタンプの獲得はこちら」のリンク先
+  stampUrl: "https://member.riddlestory.jp/stamp.html?code=RS-STAMP-select-word-7F3FRE27",
   maxVisibleSlots: 4,
   apiTimeoutMs: 10000,
   topicAutoMs: 5000,
@@ -509,6 +511,7 @@ function cacheElements() {
     answerInput: document.getElementById("answerInput"),
     reportArea: document.getElementById("reportArea"),
     reportLink: document.getElementById("reportLink"),
+    stampLink: document.getElementById("stampLink"),
     prevWeek: document.getElementById("prevWeek"),
     nextWeek: document.getElementById("nextWeek"),
     dateDisplay: document.getElementById("dateDisplay"),
@@ -1333,6 +1336,10 @@ function initAnswerForm() {
 
       if (els.reportLink) {
         els.reportLink.href = CONFIG.reportUrl;
+      }
+
+      if (els.stampLink) {
+        els.stampLink.href = CONFIG.stampUrl;
       }
 
       return;
