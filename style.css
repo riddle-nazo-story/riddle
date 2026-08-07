@@ -1165,3 +1165,34 @@ button{touch-action:manipulation}
 .contact-form[hidden],.contact-fields[hidden]{display:none!important}
 .contact-form:not([hidden]){display:block;animation:contactOpen .28s ease both}
 @keyframes contactOpen{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+\n\n/* ==========================================
+   今週の一問：正解後アクション
+========================================== */
+.report-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:10px;
+}
+
+.report-link--stamp{
+  background:#fff;
+  color:#111;
+}
+
+.report-link--stamp:hover{
+  background:#111;
+  color:#fff;
+}
+
+@media (max-width:520px){
+  .report-actions{
+    width:100%;
+    flex-direction:column;
+    align-items:stretch;
+  }
+
+  .report-actions .report-link{
+    width:100%;
+  }
+}
