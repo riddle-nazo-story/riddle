@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Redirect | RIDDLE STORY</title>
+
+  <style>
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      background:#f7f8fa;
+      color:#1f2937;
+      font-family:"Helvetica Neue","Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
+    }
+    .card{
+      width:min(100%,520px);
+      padding:40px 28px;
+      text-align:center;
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:18px;
+      box-shadow:0 14px 40px rgba(17,24,39,.06);
+    }
+    .brand{
+      font-size:12px;
+      font-weight:800;
+      letter-spacing:.18em;
+      color:#6b7280;
+    }
+    h1{margin:18px 0 10px;font-size:22px}
+    p{margin:0;color:#6b7280;line-height:1.8;font-size:14px}
+    .spinner{
+      width:28px;height:28px;margin:24px auto 0;
+      border:2px solid #e5e7eb;border-top-color:#111827;
+      border-radius:50%;animation:spin .8s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .hidden{display:none}
+    a{
+      display:inline-flex;margin-top:24px;padding:12px 18px;border-radius:10px;
+      background:#111827;color:#fff;text-decoration:none;font-size:14px;font-weight:700;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">RIDDLE STORY</div>
+    <h1 id="title">移動しています</h1>
+    <p id="message">リンク先を確認しています。しばらくお待ちください。</p>
+    <div id="spinner" class="spinner"></div>
+    <a id="homeLink" class="hidden" href="/">トップページへ</a>
+  </main>
+
+  <script>
+    /*
+      リダイレクト管理用のGAS WebアプリURLを設定してください。
+      チケット認証GASとは別です。
+    */
+    const REDIRECT_API_URL = "https://script.google.com/macros/s/AKfycby92u_abV6EZdxJ9LeKGNwsm44SB1HYQHueLimRNAkJbM37NLfeczy4xfaLpi31liI0AA/exec";
+
+    const titleEl = document.getElementById("title");
+    const messageEl = document.getElementById("message");
+    const spinnerEl = document.getElementById("spinner");
+    const homeLink = document.getElementById("homeLink");
+
+    function showError(message){
+      titleEl.textContent = "ページを開けませんでした";
+      messageEl.textContent = message;
+      spinnerEl.classList.add("hidden");
+      homeLink.classList.remove("hidden");
+    }
+
+    function getSlug(){
+      const params = new URLSearchParams(location.search);
+      return String(params.get("slug") || "").trim().toLowerCase();
+    }
+
+    function requestRedirect(slug){
+      return new Promise((resolve, reject) => {
+        const callbackName =
+          "rsRedirect_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+
+        const script = document.createElement("script");
+        let finished = false;
+
+        const cleanup = () => {
+          try{ delete window[callbackName]; }
+          catch(e){ window[callbackName] = undefined; }
+
+          if(script.parentNode){
+            script.parentNode.removeChild(script);
+          }
+        };
+
+        const timer = setTimeout(() => {
+          if(finished) return;
+          finished = true;
+          cleanup();
+          reject(new Error("TIMEOUT"));
+        }, 12000);
+
+        window[callbackName] = (data) => {
+          if(finished) return;
+          finished = true;
+          clearTimeout(timer);
+          cleanup();
+          resolve(data || {});
+        };
+
+        const url =
+          REDIRECT_API_URL +
+          "?slug=" + encodeURIComponent(slug) +
+          "&callback=" + encodeURIComponent(callbackName);
+
+        script.src = url;
+        script.async = true;
+
+        script.onerror = () => {
+          if(finished) return;
+          finished = true;
+          clearTimeout(timer);
+          cleanup();
+          reject(new Error("NETWORK_ERROR"));
+        };
+
+        document.body.appendChild(script);
+      });
+    }
+
+    async function start(){
+      const slug = getSlug();
+
+      if(!slug){
+        showError("リダイレクト情報がありません。");
+        return;
+      }
+
+      if(!REDIRECT_API_URL || REDIRECT_API_URL.includes("ここに")){
+        showError("リダイレクト設定が完了していません。");
+        return;
+      }
+
+      try{
+        const data = await requestRedirect(slug);
+
+        if(!data.ok){
+          if(data.code === "DISABLED"){
+            showError("このURLは現在使用できません。");
+          }else{
+            showError("指定されたリダイレクトURLが見つかりません。");
+          }
+          return;
+        }
+
+        const target = new URL(String(data.targetUrl || ""));
+
+        if(!["http:","https:"].includes(target.protocol)){
+          showError("転送先URLの設定が正しくありません。");
+          return;
+        }
+
+        location.replace(target.toString());
+
+      }catch(error){
+        console.error(error);
+        showError("リンク先を取得できませんでした。");
+      }
+    }
+
+    start();
+  </script>
+</body>
+</html>
