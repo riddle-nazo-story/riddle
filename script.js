@@ -431,7 +431,7 @@ const GAMES = [
     badge: "一斉スタート",
     subBadge: "25分",
     image: "assets/select_word.jpg",
-    url: "https://member.riddlestory.jp/ticket-event.html?eventId=select-answer",
+    url: "https://riddlestory.jp/select_word.html",
   },
   {
     title: "AIが作ったゲームからの脱出",
@@ -439,7 +439,7 @@ const GAMES = [
     badge: "随時スタート",
     subBadge: "15分～",
     image: "assets/escape-ai-game.jpg",
-    url: "https://riddlestory.jp/select_word.html",
+    url: "https://member.riddlestory.jp/ticket-event.html?eventId=select-answer",
   },
   {
     title: "とあるホテルの秘密",
